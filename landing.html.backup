@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImagineMyApps - Turn Your App Idea Into Reality | Free Consultation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .landing-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .header { text-align: center; color: white; margin-bottom: 50px; }
+        .header h1 { font-size: 3rem; margin-bottom: 20px; }
+        .header p { font-size: 1.2rem; opacity: 0.95; }
+        .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .benefits { padding: 40px; background: #f8f9fa; }
+        .benefits h2 { color: #4F46E5; margin-bottom: 30px; }
+        .benefit-item { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .benefit-item i { font-size: 2rem; color: #4F46E5; }
+        .benefit-item h3 { font-size: 1.1rem; margin-bottom: 5px; }
+        .benefit-item p { color: #666; font-size: 0.9rem; }
+        .form-container { padding: 40px; }
+        .form-container h2 { color: #4F46E5; margin-bottom: 30px; text-align: center; }
+        .form-group { margin-bottom: 20px; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;
+            font-family: inherit; font-size: 1rem;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: #4F46E5;
+        }
+        .g-recaptcha { margin-bottom: 20px; }
+        .btn-submit {
+            width: 100%; padding: 14px; background: #4F46E5; color: white;
+            border: none; border-radius: 8px; font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .btn-submit:hover { background: #4338ca; transform: translateY(-2px); }
+        .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+        .trust-badge { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0; }
+        .trust-badge i { color: #ffc107; margin: 0 2px; }
+        .footer { text-align: center; margin-top: 40px; color: white; }
+        .status-message { margin-top: 15px; padding: 12px; border-radius: 8px; text-align: center; display: none; font-weight: 500; }
+        
+        /* Cookie Consent Banner Styles */
+        .cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            color: white;
+            padding: 20px;
+            z-index: 9999;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+        }
+        .cookie-consent.show {
+            transform: translateY(0);
+        }
+        .cookie-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .cookie-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+        .cookie-buttons {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .cookie-btn {
+            padding: 8px 24px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .cookie-accept {
+            background: #4F46E5;
+            color: white;
+        }
+        .cookie-accept:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+        .cookie-decline {
+            background: transparent;
+            color: white;
+            border: 1px solid #666;
+        }
+        .cookie-decline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #888;
+        }
+        .cookie-content a {
+            color: #818cf8;
+            text-decoration: underline;
+        }
+        .cookie-content a:hover {
+            color: #a5b4fc;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+            .cookie-content { text-align: center; }
+            .cookie-buttons { justify-content: center; }
+        }
+    </style>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
+    <!-- ============================================ -->
+    <!-- TIKTOK PIXEL - With consent handling -->
+    <!-- ============================================ -->
+    <script>
+        // Initialize TikTok pixel but hold consent until granted
+        !function (w, d, t) {
+            w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
+            ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+            for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+            var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+            ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+            ttq.load('D890JPBC77U17CDP3G2G');
+            // Hold consent by default - will be granted when user accepts cookies
+            ttq.setConsent({ consent: 'hold' });
+            ttq.page();
+        }(window, document, 'ttq');
+    </script>
+    
+    <!-- ============================================ -->
+    <!-- MICROSOFT ADS UET TAG - With consent handling -->
+    <!-- ============================================ -->
+    <script>
+        (function(w, d, t, u, o) {
+            w[u] = w[u] || [], o.ts = (new Date).getTime();
+            var n = d.createElement(t);
+            n.src = "https://bat.bing.net/bat.js?ti=" + o.ti + ("uetq" != u ? "&q=" + u : "");
+            n.async = 1;
+            n.onload = n.onreadystatechange = function() {
+                var s = this.readyState;
+                s && "loaded" !== s && "complete" !== s || (o.q = w[u], w[u] = new UET(o), w[u].push("pageLoad"), n.onload = n.onreadystatechange = null);
+            };
+            var i = d.getElementsByTagName(t)[0];
+            i.parentNode.insertBefore(n, i);
+        })(window, document, "script", "uetq", {ti: "343251851", enableAutoSpaTracking: true});
+        // Note: UET will respect consent via the cookie banner's window.uetq.push('consent', 'grant')
+    </script>
+</head>
+<body>
+    <div class="landing-container">
+        <div class="header">
+            <h1>Turn Your App Idea Into Reality</h1>
+            <p>Professional app development tailored to your business needs. Get a free consultation today!</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="benefits">
+                <h2>Why Choose ImagineMyApps?</h2>
+                <div class="benefit-item"><i class="fas fa-rocket"></i><div><h3>Fast Development</h3><p>Launch your app in weeks, not months</p></div></div>
+                <div class="benefit-item"><i class="fas fa-code"></i><div><h3>Expert Team</h3><p>10+ years of combined development experience</p></div></div>
+                <div class="benefit-item"><i class="fas fa-chart-line"></i><div><h3>Proven Success</h3><p>50+ successful apps launched</p></div></div>
+                <div class="benefit-item"><i class="fas fa-headset"></i><div><h3>24/7 Support</h3><p>Ongoing maintenance and support</p></div></div>
+                <div class="benefit-item"><i class="fas fa-shield-alt"></i><div><h3>100% Confidential</h3><p>Your ideas are safe with us</p></div></div>
+                <div class="trust-badge">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <p style="margin-top: 10px;">Trusted by 50+ satisfied clients</p>
+                </div>
+            </div>
+            
+            <div class="form-container">
+                <h2>Free Consultation</h2>
+                <form id="landingConsultationForm">
+                    <div class="form-group"><input type="text" id="name" name="name" placeholder="Full Name" required></div>
+                    <div class="form-group"><input type="email" id="email" name="email" placeholder="Email Address" required></div>
+                    <div class="form-group"><input type="tel" id="phone" name="phone" placeholder="Phone Number"></div>
+                    <div class="form-group">
+                        <select id="service" name="service" required>
+                            <option value="">What service are you interested in?</option>
+                            <option value="mobile">Mobile App Development</option>
+                            <option value="web">Web App Development</option>
+                            <option value="backend">Backend Development</option>
+                            <option value="full">Full Stack Development</option>
+                            <option value="ai">AI/ML Integration</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><textarea id="message" name="message" rows="4" placeholder="Tell us about your app idea..." required></textarea></div>
+                    <div class="form-group">
+                        <select id="budget" name="budget">
+                            <option value="">Estimated Budget (Optional)</option>
+                            <option value="5k-10k">$5,000 - $10,000</option>
+                            <option value="10k-25k">$10,000 - $25,000</option>
+                            <option value="25k-50k">$25,000 - $50,000</option>
+                            <option value="50k+">$50,000+</option>
+                        </select>
+                    </div>
+                    <div class="g-recaptcha" data-sitekey="6LfEs-0sAAAAAA1McO9rdTyS1HBp0fWfpB2bglML"></div>
+                    <button type="submit" class="btn-submit">Get Free Consultation →</button>
+                    <div id="formStatus" class="status-message"></div>
+                </form>
+                <p style="text-align: center; margin-top: 20px; font-size: 0.8rem; color: #666;">
+                    <i class="fas fa-lock"></i> Your information is secure and confidential
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><a href="/privacy.html" style="color: white; text-decoration: underline;">Privacy Policy</a></p>
+            <p>© 2024 ImagineMyApps. All rights reserved. | <a href="/" style="color: white;">Visit Main Site</a></p>
+        </div>
+    </div>
+    
+    <!-- ============================================ -->
+    <!-- COOKIE CONSENT BANNER (from File 1) -->
+    <!-- ============================================ -->
+    <div id="cookieConsent" class="cookie-consent">
+        <div class="cookie-content">
+            <div>
+                We use cookies to improve your experience. By continuing, you agree to our 
+                <a href="/privacy.html">Privacy Policy</a>.
+            </div>
+            <div class="cookie-buttons">
+                <button class="cookie-btn cookie-decline" id="declineCookiesBtn">Decline</button>
+                <button class="cookie-btn cookie-accept" id="acceptCookiesBtn">Accept</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ============================================ -->
+    <!-- COOKIE CONSENT SCRIPT -->
+    <!-- ============================================ -->
+    <script>
+        (function() {
+            // Cookie helper functions
+            function setCookie(name, value, days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = `${name}=${value};expires=${date.toUTCString()};path=/;SameSite=Lax`;
+            }
+            
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+                return null;
+            }
+            
+            // Function to grant consent to tracking pixels
+            function grantConsent() {
+                // Signal consent to Microsoft Ads (UET)
+                if (typeof window.uetq !== 'undefined') {
+                    window.uetq.push('consent', 'grant');
+                    console.log('✅ Microsoft Ads consent granted');
+                }
+                
+                // Signal consent to TikTok Pixel
+                if (typeof ttq !== 'undefined') {
+                    ttq.setConsent({ consent: 'grant' });
+                    console.log('✅ TikTok consent granted');
+                }
+            }
+            
+            // Function to revoke/deny consent
+            function denyConsent() {
+                // Signal deny to Microsoft Ads (UET)
+                if (typeof window.uetq !== 'undefined') {
+                    window.uetq.push('consent', 'deny');
+                    console.log('❌ Microsoft Ads consent denied');
+                }
+                
+                // Signal deny to TikTok Pixel
+                if (typeof ttq !== 'undefined') {
+                    ttq.setConsent({ consent: 'revoke' });
+                    console.log('❌ TikTok consent revoked');
+                }
+            }
+            
+            // Accept cookies function
+            window.acceptCookies = function() {
+                setCookie('cookie_consent', 'accepted', 365);
+                const banner = document.getElementById('cookieConsent');
+                if (banner) banner.classList.remove('show');
+                
+                // Grant consent to tracking pixels
+                grantConsent();
+            };
+            
+            // Decline cookies function
+            window.declineCookies = function() {
+                setCookie('cookie_consent', 'declined', 365);
+                const banner = document.getElementById('cookieConsent');
+                if (banner) banner.classList.remove('show');
+                
+                // Deny consent to tracking pixels
+                denyConsent();
+            };
+            
+            // Attach event listeners to buttons
+            const acceptBtn = document.getElementById('acceptCookiesBtn');
+            const declineBtn = document.getElementById('declineCookiesBtn');
+            
+            if (acceptBtn) {
+                acceptBtn.addEventListener('click', window.acceptCookies);
+            }
+            if (declineBtn) {
+                declineBtn.addEventListener('click', window.declineCookies);
+            }
+            
+            // Show banner if no consent choice has been made
+            window.addEventListener('DOMContentLoaded', () => {
+                const consent = getCookie('cookie_consent');
+                const banner = document.getElementById('cookieConsent');
+                
+                if (!consent) {
+                    // No consent decision yet - show banner after 1 second delay
+                    setTimeout(() => {
+                        if (banner) banner.classList.add('show');
+                    }, 1000);
+                } else if (consent === 'accepted') {
+                    // User already accepted, grant consent immediately
+                    grantConsent();
+                } else if (consent === 'declined') {
+                    // User already declined, deny consent
+                    denyConsent();
+                }
+            });
+        })();
+    </script>
+    
+    <!-- ============================================ -->
+    <!-- FORM SUBMISSION HANDLER - UPDATED VERSION with REDIRECT to /thankyou.html -->
+    <!-- ============================================ -->
+    <script>
+        (function() {
+            const form = document.getElementById('landingConsultationForm');
+            const statusDiv = document.getElementById('formStatus');
+            
+            if (!form) {
+                console.error('Form not found!');
+                return;
+            }
+            
+            // Replace the existing form submit handler with the enhanced version from File 1
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const submitBtn = form.querySelector('.btn-submit');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+                
+                // Check reCAPTCHA
+                const recaptchaResponse = grecaptcha.getResponse();
+                if (!recaptchaResponse) {
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.backgroundColor = '#f8d7da';
+                    statusDiv.style.color = '#721c24';
+                    statusDiv.innerHTML = '❌ Please complete the reCAPTCHA verification.';
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+                
+                // Gather form data exactly as specified in File 1
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value || '',
+                    service: document.getElementById('service').value,
+                    message: document.getElementById('message').value,
+                    timeframe: 'ASAP',
+                    budget: document.getElementById('budget').value || 'Not specified',
+                    recaptcha: recaptchaResponse
+                };
+                
+                try {
+                    const response = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Track TikTok conversion (only if consent granted, but check anyway)
+                        if (typeof ttq !== 'undefined') {
+                            ttq.track('SubmitForm', {
+                                content_name: 'Consultation Request',
+                                content_category: 'lead',
+                                value: 50.00,
+                                currency: 'USD'
+                            });
+                            console.log('✅ TikTok conversion tracked');
+                        } else {
+                            console.warn('⚠️ TikTok pixel not loaded');
+                        }
+                        
+                        // Track Microsoft Ads conversion (UET)
+                        if (typeof window.uetq !== 'undefined') {
+                            window.uetq.push('event', 'form_submit', {
+                                'event_category': 'Lead',
+                                'event_action': 'Submit',
+                                'event_label': 'Consultation Form',
+                                'event_value': 50
+                            });
+                            console.log('✅ Microsoft Ads conversion tracked');
+                        } else {
+                            console.warn('⚠️ Microsoft UET not loaded');
+                        }
+                        
+                        // Redirect to thank you page (as per File 1 implementation)
+                        window.location.href = '/thankyou.html';
+                        
+                    } else {
+                        // If API returns success=false, throw error with message
+                        throw new Error(result.error || 'Submission failed');
+                    }
+                } catch (error) {
+                    // Display error message to user, keep button enabled
+                    statusDiv.style.display = 'block';
+                    statusDiv.style.backgroundColor = '#f8d7da';
+                    statusDiv.style.color = '#721c24';
+                    statusDiv.innerHTML = '❌ Error: ' + error.message + '. Please try again.';
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Scroll to status message for visibility
+                    statusDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppForge | Custom App Development</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="assets/images/main-logo.png">
+    <style>
+        .portfolio-logo {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            transition: transform 0.3s;
+        }
+        .portfolio-logo:hover {
+            transform: scale(1.05);
+        }
+        .testimonial-video {
+            margin-top: 15px;
+        }
+        .testimonial-video video {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .testimonial-video h4 {
+            margin: 15px 0 10px 0;
+            color: #4F46E5;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="assets/images/main-logo.png" alt="AppForge Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'45\' height=\'45\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'15\' fill=\'%234F46E5\'/%3E%3Ctext x=\'50\' y=\'68\' font-size=\'50\' text-anchor=\'middle\' fill=\'white\' font-family=\'Arial\'%3EAF%3C/text%3E%3C/svg%3E'">
+                <span>AppForge</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#consultation">Consultation</a></li>
+                <li><a href="#orders">Orders</a></li>
+            </ul>
+            <div class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Build Your Dream App</h1>
+            <p>Professional app development tailored to your business needs. From concept to launch, we bring your ideas to life.</p>
+            <div class="hero-buttons">
+                <a href="#consultation" class="btn btn-primary">Free Consultation</a>
+                <a href="#portfolio" class="btn btn-primary" style="background: white; color: #4F46E5;">View Our Work</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Comprehensive app development solutions tailored to your needs</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Apps</h3>
+                    <p>iOS & Android native apps with stunning UI/UX</p>
+                    <div class="price">From $4,999</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Web Apps</h3>
+                    <p>Responsive web applications with modern frameworks</p>
+                    <div class="price">From $2,999</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-database"></i>
+                    <h3>Backend Systems</h3>
+                    <p>Scalable APIs and database architecture</p>
+                    <div class="price">From $3,999</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Ongoing maintenance and technical support</p>
+                    <div class="price">From $499/mo</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Portfolio</h2>
+                <p>Explore our successful projects and interactive demos</p>
+            </div>
+            <div class="portfolio-grid" id="portfolioGrid">
+                <!-- Portfolio will load here -->
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Clients Say</h2>
+                <p>Trusted by businesses worldwide</p>
+            </div>
+            <div class="testimonials-grid" id="testimonialsGrid">
+                <!-- Testimonials will load here -->
+            </div>
+        </div>
+    </section>
+
+    <section id="consultation">
+        <div class="container">
+            <div class="section-header">
+                <h2>Schedule a Consultation</h2>
+                <p>Let's discuss your app idea</p>
+            </div>
+            <div class="consultation-container">
+                <div>
+                    <div class="info-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>30-Minute Free Session</h3>
+                        <p>Get expert advice on your project scope, timeline, and budget</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-list-check"></i>
+                        <h3>What We'll Cover</h3>
+                        <ul>
+                            <li>Your app requirements</li>
+                            <li>Technical feasibility</li>
+                            <li>Development timeline</li>
+                            <li>Cost estimation</li>
+                        </ul>
+                    </div>
+                </div>
+                <form id="consultationForm" class="consultation-form">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" placeholder="Phone Number">
+                    </div>
+                    <div class="form-group">
+                        <select id="service" required>
+                            <option value="">Select Service</option>
+                            <option value="mobile">Mobile App Development</option>
+                            <option value="web">Web App Development</option>
+                            <option value="backend">Backend Development</option>
+                            <option value="full">Full Stack Development</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" rows="4" placeholder="Tell us about your app idea..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Request Consultation</button>
+                    <div id="formStatus" style="margin-top: 15px; display: none;"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="orders">
+        <div class="container">
+            <div class="section-header">
+                <h2>My Orders</h2>
+                <p>Track your project progress and details</p>
+            </div>
+            <div class="order-tabs">
+                <button class="tab-btn active" onclick="showOrders('active')">Active Orders</button>
+                <button class="tab-btn" onclick="showOrders('completed')">Completed</button>
+                <button class="tab-btn" onclick="showOrders('all')">All Orders</button>
+            </div>
+            <div id="ordersList" class="orders-list"></div>
+            <div class="new-order">
+                <h3>Start New Project</h3>
+                <form id="newOrderForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="projectName" placeholder="Project Name" required>
+                        </div>
+                        <div class="form-group">
+                            <select id="projectType" required>
+                                <option value="">Project Type</option>
+                                <option value="mobile">Mobile App</option>
+                                <option value="web">Web App</option>
+                                <option value="backend">Backend System</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="projectDescription" rows="3" placeholder="Project Description & Requirements" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="number" id="budget" placeholder="Budget (USD)" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" id="deadline">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Order Request</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>AppForge</h3>
+                    <p>Building the future, one app at a time.</p>
+                </div>
+                <div>
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-envelope"></i> admin@imaginemyapps.com</p>
+                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                </div>
+                <div>
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AppForge. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Portfolio data with your actual PNG logos
+        const portfolioItems = [
+            { 
+                name: "FitTrack Pro", 
+                desc: "Fitness tracking app with workout plans and nutrition tracking.", 
+                tech: ["React Native", "Node.js", "MongoDB"], 
+                logo: "/assets/images/logos/fittrack-logo.png",
+                caseStudy: "fittrack", 
+                demo: "fittrack" 
+            },
+            { 
+                name: "UrbanMart", 
+                desc: "E-commerce platform with payment integration and inventory management.", 
+                tech: ["Next.js", "Stripe", "PostgreSQL"], 
+                logo: "/assets/images/logos/urbanmart-logo.png",
+                caseStudy: "urbanmart", 
+                demo: "urbanmart" 
+            },
+            { 
+                name: "DataDash", 
+                desc: "Business intelligence dashboard with real-time analytics.", 
+                tech: ["Vue.js", "D3.js", "Firebase"], 
+                logo: "/assets/images/logos/datadash-logo.png",
+                caseStudy: "datadash", 
+                demo: "datadash" 
+            },
+            { 
+                name: "Creator API Hub", 
+                desc: "API aggregation platform for content creators.", 
+                tech: ["Node.js", "Express", "PostgreSQL"], 
+                logo: "/assets/images/logos/api-hub-logo.png",
+                caseStudy: "api-hub", 
+                demo: "api-hub" 
+            },
+            { 
+                name: "Nexus AI", 
+                desc: "Intelligent personal assistant that manages tasks autonomously.", 
+                tech: ["Python", "TensorFlow", "GPT-4"], 
+                logo: "/assets/images/logos/nexus-logo.png",
+                caseStudy: "nexus-ai", 
+                demo: "nexus-ai" 
+            },
+            { 
+                name: "Web Scraper Pro", 
+                desc: "Intelligent data mining platform for web discovery.", 
+                tech: ["Python", "Scrapy", "MongoDB"], 
+                logo: "/assets/images/logos/webscraper-logo.png",
+                caseStudy: "web-scraper", 
+                demo: "web-scraper" 
+            },
+            { 
+                name: "Sports Analytics Pro", 
+                desc: "AI-powered betting insights for daily fantasy sports.", 
+                tech: ["Python", "TensorFlow", "XGBoost"], 
+                logo: "/assets/images/logos/sports-analytics-logo.png",
+                caseStudy: "sports-analytics", 
+                demo: "sports-analytics",
+                hasVideo: true
+            }
+        ];
+
+        // Testimonials with videos (only for Sports Analytics)
+        const testimonials = [
+            {
+                name: "Sports Analytics Pro User",
+                role: "Professional Bettor",
+                text: "The predictive analytics have transformed my betting strategy. Incredible accuracy!",
+                stars: "★★★★★",
+                hasVideo: true
+            },
+            {
+                name: "Sarah Johnson",
+                role: "CEO, TechStart",
+                text: "AppForge transformed our idea into a beautiful, functional app. Their team was professional and responsive.",
+                stars: "★★★★★",
+                hasVideo: false
+            },
+            {
+                name: "Michael Chen",
+                role: "Founder, UrbanMart",
+                text: "Working with AppForge increased our customer engagement by 200%. Game-changing experience!",
+                stars: "★★★★★",
+                hasVideo: false
+            }
+        ];
+
+        function loadPortfolio() {
+            const grid = document.getElementById('portfolioGrid');
+            grid.innerHTML = portfolioItems.map(item => `
+                <div class="portfolio-item">
+                    <img src="${item.logo}" alt="${item.name} Logo" class="portfolio-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="logo-placeholder" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-code" style="font-size: 4rem; color: white;"></i>
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">${item.name}</h3>
+                        <p>${item.desc}</p>
+                        <div class="portfolio-tech">
+                            ${item.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                        </div>
+                        <div class="portfolio-buttons">
+                            <a href="/case-study-${item.caseStudy}.html" class="btn-small">View Case Study →</a>
+                            <a href="/prototype-${item.demo}.html" class="btn-small demo-btn">🎮 Try Demo</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadTestimonials() {
+            const grid = document.getElementById('testimonialsGrid');
+            grid.innerHTML = testimonials.map(t => `
+                <div class="testimonial-card">
+                    <div class="stars">${t.stars}</div>
+                    <p>"${t.text}"</p>
+                    <h4>${t.name}</h4>
+                    <p>${t.role}</p>
+                    ${t.hasVideo ? `
+                        <div class="testimonial-video">
+                            <h4>📹 Watch Demo Videos:</h4>
+                            <video controls preload="metadata">
+                                <source src="/assets/videos/testimonials/sports-analytics-overview.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <video controls preload="metadata" style="margin-top: 10px;">
+                                <source src="/assets/videos/testimonials/sports-analytics-kalshi.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Initialize
+        loadPortfolio();
+        loadTestimonials();
+    </script>
+</body>
+</html>
