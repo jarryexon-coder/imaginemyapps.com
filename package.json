@@ -1,13 +1,13 @@
 {
   "name": "imaginemyapps",
   "version": "1.0.0",
-  "description": "ImagineMyApps - Custom App Development",
   "type": "module",
-  "main": "api/contact.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node api/contact.js",
-    "dev": "nodemon api/contact.js",
-    "build": "echo 'No build required'"
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "health": "node health.js",
+    "setup-db": "node setup-db.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
