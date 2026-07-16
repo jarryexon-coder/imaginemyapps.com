@@ -32,3 +32,5 @@ test-db.js
 .idea/
 *.swp
 *.swo
+node_modules/
+package-lock.json

@@ -1,0 +1,12 @@
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "npm install --omit=dev"
+  },
+  "deploy": {
+    "startCommand": "node api/contact.js",
+    "healthcheckPath": "/api/contact/health",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 3
+  }
+}

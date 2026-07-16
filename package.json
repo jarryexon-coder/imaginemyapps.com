@@ -7,9 +7,7 @@
   "scripts": {
     "start": "node api/contact.js",
     "dev": "nodemon api/contact.js",
-    "deploy": "railway up",
-    "setup-db": "node setup-db.js",
-    "test-db": "node test-db.js"
+    "build": "echo 'No build required'"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
