@@ -1,0 +1,24 @@
+{
+  "name": "imaginemyapps",
+  "version": "1.0.0",
+  "description": "ImagineMyApps - Custom App Development",
+  "type": "module",
+  "main": "api/contact.js",
+  "scripts": {
+    "start": "node api/contact.js",
+    "dev": "nodemon api/contact.js",
+    "deploy": "railway up",
+    "setup-db": "node setup-db.js",
+    "test-db": "node test-db.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^9.0.3",
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ImagineMyApps</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .header h1 { font-size: 28px; font-weight: 600; }
+        .header .stats { 
+            display: flex; 
+            gap: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 24px; font-weight: 700; }
+        .stat-label { font-size: 14px; opacity: 0.8; }
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .filters select, .filters input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            flex: 1;
+            min-width: 150px;
+        }
+        .filters button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .filters button:hover { background: #5a67d8; }
+        .filters .btn-secondary {
+            background: #48bb78;
+        }
+        .filters .btn-secondary:hover { background: #38a169; }
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        table { width: 100%; border-collapse: collapse; }
+        thead {
+            background: #f7f9fc;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+        tr:hover { background: #f7f9fc; }
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-approved { background: #d1fae5; color: #065f46; }
+        .status-rejected { background: #fee2e2; color: #991b1b; }
+        .status-contacted { background: #dbeafe; color: #1e40af; }
+        .action-btn {
+            padding: 5px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin: 0 3px;
+            transition: opacity 0.2s;
+        }
+        .action-btn:hover { opacity: 0.8; }
+        .btn-view { background: #e0e7ff; color: #4338ca; }
+        .btn-approve { background: #d1fae5; color: #065f46; }
+        .btn-reject { background: #fee2e2; color: #991b1b; }
+        .btn-contact { background: #dbeafe; color: #1e40af; }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-content h2 { margin-bottom: 20px; color: #1a202c; }
+        .modal-content p { margin: 10px 0; line-height: 1.6; }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #a0aec0;
+        }
+        .modal-close:hover { color: #718096; }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+        }
+        .error { color: #e53e3e; padding: 20px; text-align: center; }
+        @media (max-width: 768px) {
+            .header { flex-direction: column; }
+            .header .stats { width: 100%; justify-content: space-around; }
+            .filters { flex-direction: column; }
+            .filters select, .filters input { width: 100%; }
+            table { font-size: 12px; }
+            th, td { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Consultation Dashboard</h1>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">Total</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="pendingCount">0</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="todayCount">0</div>
+                    <div class="stat-label">Today</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <select id="statusFilter" onchange="applyFilters()">
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+                <option value="contacted">Contacted</option>
+            </select>
+            <input type="text" id="searchInput" placeholder="Search by name or email..." onkeyup="applyFilters()">
+            <button onclick="refreshData()">🔄 Refresh</button>
+            <button onclick="exportCSV()" class="btn-secondary">📥 Export CSV</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Service</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="consultationsBody">
+                    <tr><td colspan="7" class="loading">Loading consultations...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2>Consultation Details</h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // YOUR ADMIN TOKEN - Make sure this matches your Railway variable
+        const ADMIN_TOKEN = 'h+MJQnLvM5z6Rv2ZWaLv0cdu325qn8CVnZRqL86krmY=';
+        const API_URL = '/api/contact';
+        
+        let consultations = [];
+
+        async function loadConsultations() {
+            const tbody = document.getElementById('consultationsBody');
+            tbody.innerHTML = '<tr><td colspan="7" class="loading">Loading consultations...</td></tr>';
+
+            try {
+                const response = await fetch(API_URL, {
+                    headers: {
+                        'Authorization': `Bearer ${ADMIN_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        throw new Error('Unauthorized. Please check your admin token.');
+                    }
+                    if (response.status === 404) {
+                        throw new Error('API endpoint not found. Make sure your backend is running.');
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (data.success) {
+                    consultations = data.data || [];
+                    updateStats();
+                    renderTable();
+                } else {
+                    throw new Error(data.error || 'Failed to load data');
+                }
+            } catch (error) {
+                console.error('Error loading consultations:', error);
+                tbody.innerHTML = `<tr><td colspan="7" class="error">❌ Error: ${error.message}</td></tr>`;
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('totalCount').textContent = consultations.length;
+            
+            const pending = consultations.filter(c => c.status === 'pending').length;
+            document.getElementById('pendingCount').textContent = pending;
+            
+            const today = new Date().toISOString().split('T')[0];
+            const todayCount = consultations.filter(c => c.created_at && c.created_at.startsWith(today)).length;
+            document.getElementById('todayCount').textContent = todayCount;
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('consultationsBody');
+            const statusFilter = document.getElementById('statusFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            let filtered = consultations;
+            
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(c => c.status === statusFilter);
+            }
+            
+            if (searchTerm) {
+                filtered = filtered.filter(c => 
+                    c.name?.toLowerCase().includes(searchTerm) ||
+                    c.email?.toLowerCase().includes(searchTerm) ||
+                    c.message?.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #718096; padding: 40px;">No consultations found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(c => `
+                <tr>
+                    <td>#${c.id}</td>
+                    <td><strong>${c.name || 'N/A'}</strong></td>
+                    <td>${c.email || 'N/A'}</td>
+                    <td>${c.service || 'Not specified'}</td>
+                    <td><span class="status-badge status-${c.status || 'pending'}">${c.status || 'pending'}</span></td>
+                    <td>${c.created_at ? new Date(c.created_at).toLocaleDateString() : 'N/A'}</td>
+                    <td>
+                        <button class="action-btn btn-view" onclick="viewDetails(${c.id})">👁️ View</button>
+                        <button class="action-btn btn-approve" onclick="updateStatus(${c.id}, 'approved')">✅</button>
+                        <button class="action-btn btn-contact" onclick="updateStatus(${c.id}, 'contacted')">📞</button>
+                        <button class="action-btn btn-reject" onclick="updateStatus(${c.id}, 'rejected')">❌</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function applyFilters() {
+            renderTable();
+        }
+
+        function refreshData() {
+            loadConsultations();
+        }
+
+        function viewDetails(id) {
+            const consultation = consultations.find(c => c.id === id);
+            if (!consultation) return;
+
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <p><strong>Name:</strong> ${consultation.name || 'N/A'}</p>
+                <p><strong>Email:</strong> ${consultation.email || 'N/A'}</p>
+                <p><strong>Phone:</strong> ${consultation.phone || 'Not provided'}</p>
+                <p><strong>Service:</strong> ${consultation.service || 'Not specified'}</p>
+                <p><strong>Budget:</strong> ${consultation.budget || 'Not specified'}</p>
+                <p><strong>Timeframe:</strong> ${consultation.timeframe || 'Not specified'}</p>
+                <p><strong>Status:</strong> <span class="status-badge status-${consultation.status || 'pending'}">${consultation.status || 'pending'}</span></p>
+                <p><strong>Submitted:</strong> ${consultation.created_at ? new Date(consultation.created_at).toLocaleString() : 'N/A'}</p>
+                <hr>
+                <p><strong>Message:</strong></p>
+                <p style="background: #f7f9fc; padding: 15px; border-radius: 6px; margin-top: 5px; white-space: pre-wrap;">${consultation.message || 'No message'}</p>
+            `;
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        async function updateStatus(id, newStatus) {
+            if (!confirm(`Change status to ${newStatus}?`)) return;
+
+            try {
+                const response = await fetch(`${API_URL}?id=${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${ADMIN_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                });
+
+                if (response.ok) {
+                    await loadConsultations();
+                } else {
+                    const error = await response.json();
+                    alert('Failed to update status: ' + (error.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error updating status:', error);
+                alert('Error updating status: ' + error.message);
+            }
+        }
+
+        function exportCSV() {
+            if (consultations.length === 0) {
+                alert('No data to export');
+                return;
+            }
+
+            const headers = ['ID', 'Name', 'Email', 'Phone', 'Service', 'Message', 'Status', 'Date'];
+            const rows = consultations.map(c => [
+                c.id,
+                `"${(c.name || '').replace(/"/g, '""')}"`,
+                `"${(c.email || '').replace(/"/g, '""')}"`,
+                `"${(c.phone || '').replace(/"/g, '""')}"`,
+                `"${(c.service || '').replace(/"/g, '""')}"`,
+                `"${(c.message || '').replace(/"/g, '""')}"`,
+                `"${c.status || 'pending'}"`,
+                `"${c.created_at ? new Date(c.created_at).toLocaleString() : ''}"`
+            ]);
+
+            const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `consultations_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', loadConsultations);
+        
+        // Auto-refresh every 60 seconds
+        setInterval(refreshData, 60000);
+    </script>
+</body>
+</html>

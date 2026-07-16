@@ -1,19 +1,21 @@
 import { Pool } from 'pg';
 
+// Use PUBLIC URL when running locally
+const isLocal = !process.env.RAILWAY_ENVIRONMENT;
+const connectionString = isLocal 
+    ? 'postgresql://postgres:xSbMwKByqWxCbLHzfPnlLdpIfAUZyLwZ@tokaido.proxy.rlwy.net:19508/railway'
+    : 'postgresql://postgres:xSbMwKByqWxCbLHzfPnlLdpIfAUZyLwZ@postgres.railway.internal:5432/railway';
+
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    host: process.env.PGHOST || 'postgres.railway.internal',
-    port: parseInt(process.env.PGPORT || '5432'),
-    database: process.env.PGDATABASE || 'railway',
-    user: process.env.PGUSER || 'postgres',
-    password: process.env.PGPASSWORD,
-    ssl: false
+    connectionString: connectionString,
+    ssl: isLocal ? { rejectUnauthorized: false } : false
 });
 
 async function setupDatabase() {
     const client = await pool.connect();
     try {
         console.log('🔌 Connected to PostgreSQL...');
+        console.log(`📍 Using ${isLocal ? 'PUBLIC' : 'INTERNAL'} connection`);
         
         // Create consultations table
         await client.query(`
@@ -75,8 +77,22 @@ async function setupDatabase() {
         console.log('✅ Created email_logs table');
 
         console.log('🎉 Database schema setup complete!');
+        
+        // Verify tables
+        const result = await client.query(`
+            SELECT table_name 
+            FROM information_schema.tables 
+            WHERE table_schema = 'public'
+            ORDER BY table_name;
+        `);
+        console.log('📊 Tables in database:', result.rows.map(r => r.table_name).join(', '));
+
     } catch (error) {
-        console.error('❌ Error setting up database:', error);
+        console.error('❌ Error setting up database:', error.message);
+        if (error.message.includes('getaddrinfo')) {
+            console.log('\n💡 Tip: Make sure you\'re using the correct connection string');
+            console.log('   PUBLIC URL: postgresql://postgres:...@tokaido.proxy.rlwy.net:19508/railway');
+        }
     } finally {
         client.release();
         await pool.end();
