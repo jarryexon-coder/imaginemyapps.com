@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ImagineMyApps | Custom App Development</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="assets/images/main-logo.png">
+    <style>
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #555;
+            padding: 8px 16px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .trust-badge i {
+            font-size: 18px;
+            color: #4F46E5;
+        }
+        .trust-badge .fa-lock { color: #28a745; }
+        .trust-badge .fa-shield-halved { color: #4F46E5; }
+        .trust-badge .fa-star { color: #ffc107; }
+
+        /* Download App Banner */
+        .app-download-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 30px 40px;
+            margin: 30px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        .app-download-banner .content h3 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        .app-download-banner .content p {
+            color: rgba(255,255,255,0.85);
+            font-size: 16px;
+            margin: 0;
+        }
+        .app-download-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .app-download-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .app-download-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+        .app-download-btn i {
+            font-size: 28px;
+        }
+        .app-download-btn .btn-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .app-download-btn .btn-text small {
+            font-size: 10px;
+            opacity: 0.7;
+        }
+        .app-download-btn .btn-text strong {
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .app-download-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 25px;
+            }
+            .app-download-buttons {
+                justify-content: center;
+            }
+            .trust-badges {
+                gap: 10px;
+            }
+            .trust-badge {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="assets/images/main-logo.png" alt="ImagineMyApps Logo" style="height: 40px; width: auto;" onerror="this.src='https://placehold.co/40x40/4F46E5/white?text=IMA'">
+                <span>ImagineMyApps</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#consultation">Consultation</a></li>
+            </ul>
+            <div class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Build Your Dream App</h1>
+            <p>Professional app development tailored to your business needs. From concept to launch, we bring your ideas to life.</p>
+            <div class="hero-buttons">
+                <a href="#consultation" class="btn btn-primary">Free Consultation</a>
+                <a href="#portfolio" class="btn btn-primary" style="background: white; color: #4F46E5;">View Our Work</a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="trust-badges">
+                <span class="trust-badge"><i class="fas fa-lock"></i> 256-bit SSL</span>
+                <span class="trust-badge"><i class="fas fa-shield-halved"></i> GDPR Compliant</span>
+                <span class="trust-badge"><i class="fas fa-star"></i> 4.9/5 Rating</span>
+                <span class="trust-badge"><i class="fas fa-clock"></i> 24/7 Support</span>
+                <span class="trust-badge"><i class="fas fa-check-circle"></i> 50+ Apps Launched</span>
+            </div>
+
+            <!-- Download App Banner -->
+            <div class="app-download-banner" id="appDownload">
+                <div class="content">
+                    <h3><i class="fas fa-mobile-screen-button"></i> Get the App</h3>
+                    <p>Download our mobile app for a better experience.</p>
+                </div>
+                <div class="app-download-buttons">
+                    <a href="#" class="app-download-btn" onclick="showComingSoon('iOS')">
+                        <i class="fab fa-apple"></i>
+                        <div class="btn-text">
+                            <small>Download on the</small>
+                            <strong>App Store</strong>
+                        </div>
+                    </a>
+                    <a href="#" class="app-download-btn" onclick="showComingSoon('Android')">
+                        <i class="fab fa-google-play"></i>
+                        <div class="btn-text">
+                            <small>Get it on</small>
+                            <strong>Google Play</strong>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Comprehensive app development solutions tailored to your needs</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Apps</h3>
+                    <p>iOS & Android native apps with stunning UI/UX</p>
+                    <div class="price">From $1,599</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Web Apps</h3>
+                    <p>Responsive web applications with modern frameworks</p>
+                    <div class="price">From $899</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-database"></i>
+                    <h3>Backend Systems</h3>
+                    <p>Scalable APIs and database architecture</p>
+                    <div class="price">From $979</div>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Ongoing maintenance and technical support</p>
+                    <div class="price">From $299/mo</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Portfolio</h2>
+                <p>Explore our successful projects and interactive demos</p>
+            </div>
+            
+            <!-- Featured Project: Sports Analytics Pro -->
+            <div id="featuredProject" style="margin-bottom: 60px;"></div>
+            
+            <!-- Other Projects -->
+            <div id="portfolioGrid" class="portfolio-grid"></div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Clients Say</h2>
+                <p>Trusted by businesses worldwide</p>
+            </div>
+            <div class="testimonials-grid" id="testimonialsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Consultation Section -->
+    <section id="consultation">
+        <div class="container">
+            <div class="section-header">
+                <h2>Schedule a Consultation</h2>
+                <p>Let's discuss your app idea</p>
+            </div>
+            <div class="consultation-container">
+                <div>
+                    <div class="info-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>30-Minute Free Session</h3>
+                        <p>Get expert advice on your project scope, timeline, and budget</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-list-check"></i>
+                        <h3>What We'll Cover</h3>
+                        <ul>
+                            <li>Your app requirements</li>
+                            <li>Technical feasibility</li>
+                            <li>Development timeline</li>
+                            <li>Cost estimation</li>
+                        </ul>
+                    </div>
+                </div>
+                <form id="consultationForm" class="consultation-form">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" placeholder="Phone Number">
+                    </div>
+                    <div class="form-group">
+                        <select id="service" required>
+                            <option value="">Select Service</option>
+                            <option value="mobile">Mobile App Development - $1,599+</option>
+                            <option value="web">Web App Development - $899+</option>
+                            <option value="backend">Backend Development - $979+</option>
+                            <option value="full">Full Stack Development</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" rows="4" placeholder="Tell us about your app idea..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <select id="timeframe">
+                            <option value="">Preferred Timeline</option>
+                            <option value="1month">Within 1 month</option>
+                            <option value="2-3months">2-3 months</option>
+                            <option value="3-6months">3-6 months</option>
+                            <option value="flexible">Flexible</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Request Consultation</button>
+                    <div id="formStatus" style="margin-top: 15px; display: none;"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Footer -->
+    <footer class="footer-enhanced">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>ImagineMyApps</h3>
+                    <p>We turn your app ideas into reality. Professional development, affordable prices, and 24/7 support.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3>Quick Links</h3>
+                    <p><a href="#home">Home</a></p>
+                    <p><a href="#services">Services</a></p>
+                    <p><a href="#portfolio">Portfolio</a></p>
+                    <p><a href="#testimonials">Testimonials</a></p>
+                    <p><a href="#consultation">Consultation</a></p>
+                </div>
+                <div>
+                    <h3>Services</h3>
+                    <p><a href="#services">Mobile Apps</a></p>
+                    <p><a href="#services">Web Apps</a></p>
+                    <p><a href="#services">Backend Systems</a></p>
+                    <p><a href="#services">24/7 Support</a></p>
+                </div>
+                <div>
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:admin@imaginemyapps.com">admin@imaginemyapps.com</a></p>
+                    <p><i class="fas fa-phone"></i> <a href="tel:+14044968952">(404) 496-8952</a></p>
+                    <p><i class="fas fa-shield-halved"></i> <a href="/privacy.html">Privacy Policy</a></p>
+                    <p><i class="fas fa-mobile-screen-button"></i> <a href="#appDownload">Download App</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ImagineMyApps. All rights reserved. | Built with <i class="fas fa-heart" style="color: #ff4757;"></i> for app creators</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Portfolio data
+        const otherProjects = [
+            { name: "FitTrack Pro", desc: "Fitness tracking app with workout plans and nutrition tracking.", tech: ["React Native", "Node.js", "MongoDB"], logo: "/assets/images/logos/fittrack-logo.png", icon: "fa-dumbbell", caseStudy: "fittrack", demo: "fittrack" },
+            { name: "UrbanMart", desc: "E-commerce platform with payment integration and inventory management.", tech: ["Next.js", "Stripe", "PostgreSQL"], logo: "/assets/images/logos/urbanmart-logo.png", icon: "fa-store", caseStudy: "urbanmart", demo: "urbanmart" },
+            { name: "DataDash", desc: "Business intelligence dashboard with real-time analytics.", tech: ["Vue.js", "D3.js", "Firebase"], logo: "/assets/images/logos/datadash-logo.png", icon: "fa-chart-line", caseStudy: "datadash", demo: "datadash" },
+            { name: "Creator API Hub", desc: "API aggregation platform for content creators.", tech: ["Node.js", "Express", "PostgreSQL"], logo: "/assets/images/logos/api-hub-logo.png", icon: "fa-plug", caseStudy: "api-hub", demo: "api-hub" },
+            { name: "Nexus AI", desc: "Intelligent personal assistant that manages tasks autonomously.", tech: ["Python", "TensorFlow", "GPT-4"], logo: "/assets/images/logos/nexus-logo.png", icon: "fa-robot", caseStudy: "nexus-ai", demo: "nexus-ai" },
+            { name: "Web Scraper Pro", desc: "Intelligent data mining platform for web discovery.", tech: ["Python", "Scrapy", "MongoDB"], logo: "/assets/images/logos/webscraper-logo.png", icon: "fa-spider", caseStudy: "web-scraper", demo: "web-scraper" }
+        ];
+
+        const featuredProject = {
+            name: "Sports Analytics Pro",
+            desc: "AI-powered insights for daily fantasy sports. Real-time predictions, player projections, and advanced analytics for FanDuel, PrizePicks, and DraftKings.",
+            tech: ["Python", "TensorFlow", "XGBoost", "React"],
+            logo: "/assets/images/logos/sports-analytics-logo.png",
+            caseStudy: "sports-analytics",
+            demo: "sports-analytics"
+        };
+
+        function loadFeaturedProject() {
+            const container = document.getElementById('featuredProject');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <div style="max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 200px; display: flex; align-items: center; justify-content: center; padding: 20px;">
+                        <img src="${featuredProject.logo}" alt="${featuredProject.name}" style="max-width: 80%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    <div style="padding: 25px;">
+                        <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: #4F46E5;">⭐ Featured: ${featuredProject.name}</h3>
+                        <p style="font-size: 1.1rem; margin-bottom: 15px; color: #555;">${featuredProject.desc}</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0;">
+                            ${featuredProject.tech.map(t => `<span style="background: #e0e0e0; padding: 6px 14px; border-radius: 25px; font-size: 0.85rem;">${t}</span>`).join('')}
+                        </div>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <a href="/case-study-${featuredProject.caseStudy}.html" style="background: #4F46E5; color: white; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600;">View Case Study →</a>
+                            <a href="/prototype-${featuredProject.demo}.html" style="background: #ffc107; color: #333; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600;">🎮 Try Demo</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadPortfolio() {
+            const grid = document.getElementById('portfolioGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = otherProjects.map(item => `
+                <div class="portfolio-item">
+                    <div style="background: #f5f5f5; height: 200px; display: flex; align-items: center; justify-content: center; padding: 20px;">
+                        <img src="${item.logo}" alt="${item.name}" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas ${item.icon}\' style=\'font-size: 4rem; color: #4F46E5;\'></i>'">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="portfolio-title">${item.name}</h3>
+                        <p>${item.desc}</p>
+                        <div class="portfolio-tech">
+                            ${item.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                        </div>
+                        <div class="portfolio-buttons">
+                            <a href="/case-study-${item.caseStudy}.html" class="btn-small">View Case Study →</a>
+                            <a href="/prototype-${item.demo}.html" class="btn-small demo-btn">🎮 Try Demo</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadTestimonials() {
+            const grid = document.getElementById('testimonialsGrid');
+            if (!grid) return;
+            
+            const testimonials = [
+                { name: "Sarah Johnson", role: "CEO, TechStart", text: "ImagineMyApps transformed our idea into a beautiful, functional app. Their team was professional and responsive.", stars: "★★★★★" },
+                { name: "Michael Chen", role: "Founder, UrbanMart", text: "Working with ImagineMyApps increased our customer engagement by 200%. Game-changing experience!", stars: "★★★★★" },
+                { name: "Emily Rodriguez", role: "CTO, DataDash", text: "Exceptional quality and support. ImagineMyApps delivered exactly what we needed.", stars: "★★★★½" }
+            ];
+            
+            grid.innerHTML = testimonials.map(t => `
+                <div class="testimonial-card">
+                    <div class="stars">${t.stars}</div>
+                    <p>"${t.text}"</p>
+                    <h4>${t.name}</h4>
+                    <p>${t.role}</p>
+                </div>
+            `).join('');
+        }
+
+        // Coming Soon popup
+        function showComingSoon(platform) {
+            alert(`📱 ${platform} version coming soon!\n\nWe're working hard to bring you the best experience. Stay tuned!`);
+        }
+
+        // Form handler
+        const consultationForm = document.getElementById('consultationForm');
+        const formStatus = document.getElementById('formStatus');
+
+        if (consultationForm) {
+            consultationForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const submitBtn = consultationForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+                
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value || '',
+                    service: document.getElementById('service').value,
+                    message: document.getElementById('message').value,
+                    timeframe: document.getElementById('timeframe').value || ''
+                };
+                
+                try {
+                    const response = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        formStatus.style.display = 'block';
+                        formStatus.style.backgroundColor = '#d4edda';
+                        formStatus.style.color = '#155724';
+                        formStatus.style.padding = '10px';
+                        formStatus.style.borderRadius = '5px';
+                        formStatus.style.marginTop = '15px';
+                        formStatus.innerHTML = '✅ ' + result.message;
+                        consultationForm.reset();
+                        
+                        setTimeout(() => {
+                            formStatus.style.display = 'none';
+                        }, 5000);
+                    } else {
+                        throw new Error(result.error || 'Submission failed');
+                    }
+                } catch (error) {
+                    formStatus.style.display = 'block';
+                    formStatus.style.backgroundColor = '#f8d7da';
+                    formStatus.style.color = '#721c24';
+                    formStatus.style.padding = '10px';
+                    formStatus.style.borderRadius = '5px';
+                    formStatus.style.marginTop = '15px';
+                    formStatus.innerHTML = '❌ Error: ' + error.message;
+                } finally {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        }
+
+        // Initialize
+        loadFeaturedProject();
+        loadPortfolio();
+        loadTestimonials();
+    </script>
+</body>
+</html>

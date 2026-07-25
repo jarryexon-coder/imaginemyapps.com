@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack Pro Case Study | ImagineMyApps</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .case-study-header {
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            color: white;
+            padding: 120px 20px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .case-study-header .case-image {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            max-height: 200px;
+            opacity: 0.2;
+        }
+        .case-study-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        .case-study-section {
+            margin-bottom: 40px;
+        }
+        .case-study-section h2 {
+            color: #4F46E5;
+            margin-bottom: 20px;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 40px 0;
+        }
+        .metric-card {
+            text-align: center;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        .metric-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4F46E5;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        .feature-list li:before {
+            content: "✓";
+            color: #4F46E5;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .tech-item {
+            background: #e0e0e0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background: #4F46E5;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .back-button:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+        }
+        .why-matters {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid #4F46E5;
+            margin-top: 30px;
+        }
+        .why-matters h3 {
+            color: #4F46E5;
+            margin-bottom: 15px;
+        }
+        .why-matters a {
+            color: #4F46E5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .why-matters a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .case-study-header .case-image {
+                display: none;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="assets/images/main-logo.png" alt="ImagineMyApps Logo" style="height: 40px; width: auto;">
+                <span>ImagineMyApps</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#services">Services</a></li>
+                <li><a href="/#portfolio">Portfolio</a></li>
+                <li><a href="/#consultation">Consultation</a></li>
+            </ul>
+            <div class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="case-study-header">
+        <img src="/assets/images/case-studies/fittrack-case.png" alt="FitTrack Pro" class="case-image">
+        <h1>FitTrack Pro: Helping People Stay Consistent With Their Fitness Goals</h1>
+        <p>An all-in-one fitness app that makes healthy living simpler, smarter, and more motivating.</p>
+    </div>
+
+    <div class="case-study-content">
+        <div class="case-study-section">
+            <h2>Overview</h2>
+            <p>FitTrack Pro was created to make healthy living simpler, smarter, and more motivating. The goal was to build an all-in-one fitness app that helps users track workouts, plan meals, and stay accountable through a supportive community.</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-number">50K+</div>
+                <div>Downloads in First Month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-number">200%</div>
+                <div>User Engagement Increase</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-number">4.8</div>
+                <div>Star Rating</div>
+            </div>
+        </div>
+
+        <div class="case-study-section">
+            <h2>The Challenge</h2>
+            <p>The fitness app market is packed with hundreds of options, making it difficult for a new app to stand out. Our client wanted more than just another workout tracker—they wanted an app that would actually keep people motivated by combining fitness tracking, personalized guidance, and social interaction into one seamless experience.</p>
+        </div>
+
+        <div class="case-study-section">
+            <h2>Our Solution</h2>
+            <p>We designed and developed a modern mobile app that works on both iPhone and Android, allowing the client to reach more users with a single product.</p>
+            <ul class="feature-list">
+                <li>🏋️ Live workout tracking to monitor every exercise</li>
+                <li>🥗 Personalized meal recommendations based on user goals</li>
+                <li>🤖 AI-powered workout suggestions that adapt over time</li>
+                <li>📷 Barcode scanning for quick nutrition tracking</li>
+                <li>🏆 Challenges and leaderboards to keep users motivated</li>
+                <li>❤️ Apple Health & Google Fit integration for automatic health syncing</li>
+            </ul>
+            <p>The result is a fitness app that keeps users engaged instead of becoming another forgotten download.</p>
+        </div>
+
+        <div class="case-study-section">
+            <h2>Technology Stack</h2>
+            <div class="tech-stack">
+                <span class="tech-item">React Native</span>
+                <span class="tech-item">Node.js</span>
+                <span class="tech-item">MongoDB</span>
+                <span class="tech-item">AWS</span>
+                <span class="tech-item">Firebase</span>
+            </div>
+        </div>
+
+        <div class="case-study-section">
+            <h2>The Results</h2>
+            <p>The launch exceeded expectations. 50,000+ downloads in the first month, 200% increase in user engagement, and a 4.8-star average rating across both app stores. These results demonstrated that combining great design with the right features can dramatically improve user retention and customer satisfaction.</p>
+        </div>
+
+        <div class="why-matters">
+            <h3>Why This Matters</h3>
+            <p>This isn't just a fitness app—it's an example of what's possible when the right idea is paired with thoughtful design and powerful technology.</p>
+            <p>Whether you're building the next fitness platform, marketplace, booking system, delivery service, or AI-powered startup, we can help transform your idea into an app that people love to use.</p>
+            <a href="/#consultation">Start Your Project →</a>
+        </div>
+
+        <a href="/#portfolio" class="back-button">← Back to Portfolio</a>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>ImagineMyApps</h3>
+                    <p>Building the future, one app at a time.</p>
+                </div>
+                <div>
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-envelope"></i> admin@imaginemyapps.com</p>
+                    <p><i class="fas fa-phone"></i> (404) 496-8952</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

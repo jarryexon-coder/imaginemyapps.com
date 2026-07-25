@@ -34,3 +34,5 @@ test-db.js
 *.swo
 node_modules/
 package-lock.json
+.vercel
+.env*
