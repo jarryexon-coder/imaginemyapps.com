@@ -2,57 +2,89 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(express.json());
+// Log every request
 app.use((req, res, next) => {
     console.log(`📨 ${req.method} ${req.url}`);
+    console.log('Headers:', req.headers);
+    next();
+});
+
+app.use(express.json());
+app.use(express.text());
+
+// CORS
+app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(200);
+        return;
+    }
     next();
 });
 
 // Health check
 app.get('/health', (req, res) => {
+    console.log('✅ Health check called');
     res.json({ status: 'OK', message: 'Healthy' });
 });
 
 app.get('/api/health', (req, res) => {
+    console.log('✅ API Health check called');
     res.json({ status: 'OK', message: 'Healthy' });
 });
 
 // Root
 app.get('/', (req, res) => {
+    console.log('✅ Root called');
     res.json({ status: 'online', message: 'API is running' });
 });
 
-// Contact endpoint
+// Contact endpoint with detailed logging
 app.post('/api/contact', (req, res) => {
-    const { name, email, phone, service, message, timeframe } = req.body;
+    console.log('📩 POST /api/contact called');
+    console.log('📦 Body:', req.body);
+    console.log('📦 Body type:', typeof req.body);
     
-    console.log('📩 Received consultation:', { name, email, phone, service, message, timeframe });
+    try {
+        const { name, email, phone, service, message, timeframe } = req.body || {};
+        
+        console.log('📩 Extracted:', { name, email, phone, service, message, timeframe });
 
-    if (!name || !email || !message) {
-        return res.status(400).json({
-            success: false,
-            error: 'Name, email, and message are required'
+        if (!name || !email || !message) {
+            console.log('❌ Validation failed');
+            return res.status(400).json({
+                success: false,
+                error: 'Name, email, and message are required'
+            });
+        }
+
+        console.log('✅ Success');
+        res.json({
+            success: true,
+            message: 'Consultation request received!',
+            data: { name, email, service },
+            notifications: { emailSent: false, dbSaved: true }
         });
+    } catch (error) {
+        console.error('❌ Error:', error);
+        res.status(500).json({ error: error.message });
     }
-
-    res.json({
-        success: true,
-        message: 'Consultation request received!',
-        data: { name, email, service },
-        notifications: { emailSent: false, dbSaved: true }
-    });
 });
 
 // 404
 app.use((req, res) => {
+    console.log('❌ 404:', req.url);
     res.status(404).json({ error: 'Not found' });
 });
 
-// Start server
+// Error handler
+app.use((err, req, res, next) => {
+    console.error('❌ Server error:', err);
+    res.status(500).json({ error: err.message });
+});
+
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`✅ Server running on port ${PORT}`);
     console.log(`📡 Health: http://0.0.0.0:${PORT}/health`);
