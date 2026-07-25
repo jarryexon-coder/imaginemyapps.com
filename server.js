@@ -2,18 +2,9 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Log every request
+// CORS and logging
 app.use((req, res, next) => {
     console.log(`📨 ${req.method} ${req.url}`);
-    console.log('Headers:', req.headers);
-    next();
-});
-
-app.use(express.json());
-app.use(express.text());
-
-// CORS
-app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -23,6 +14,8 @@ app.use((req, res, next) => {
     }
     next();
 });
+
+app.use(express.json());
 
 // Health check
 app.get('/health', (req, res) => {
@@ -35,22 +28,25 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'Healthy' });
 });
 
-// Root
 app.get('/', (req, res) => {
     console.log('✅ Root called');
     res.json({ status: 'online', message: 'API is running' });
 });
 
-// Contact endpoint with detailed logging
+app.get('/api/contact', (req, res) => {
+    console.log('📩 GET /api/contact called');
+    res.json({ 
+        message: 'GET method not allowed. Use POST to submit a consultation.',
+        allowed_methods: ['POST']
+    });
+});
+
 app.post('/api/contact', (req, res) => {
     console.log('📩 POST /api/contact called');
     console.log('📦 Body:', req.body);
-    console.log('📦 Body type:', typeof req.body);
     
     try {
         const { name, email, phone, service, message, timeframe } = req.body || {};
-        
-        console.log('📩 Extracted:', { name, email, phone, service, message, timeframe });
 
         if (!name || !email || !message) {
             console.log('❌ Validation failed');
@@ -73,7 +69,7 @@ app.post('/api/contact', (req, res) => {
     }
 });
 
-// 404
+// 404 handler
 app.use((req, res) => {
     console.log('❌ 404:', req.url);
     res.status(404).json({ error: 'Not found' });
