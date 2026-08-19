@@ -1,0 +1,19 @@
+.case-study-header { position: relative; overflow: hidden; padding: 128px 20px 72px; color: #fff; text-align: center; background: var(--case-gradient, linear-gradient(135deg, #4f46e5, #7c3aed)); }
+.case-study-header::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(15,23,42,.28), transparent); pointer-events: none; }
+.case-study-header > * { position: relative; z-index: 1; }
+.case-study-header img { width: min(680px, 82vw); max-height: 300px; margin: 28px auto 0; object-fit: contain; border-radius: 18px; box-shadow: 0 22px 55px rgba(15,23,42,.32); }
+.case-study-header h1 { max-width: 900px; margin: 0 auto 14px; font-size: clamp(2.15rem, 5vw, 4rem); line-height: 1.05; }
+.case-study-header p { max-width: 720px; margin: auto; font-size: 1.12rem; color: rgba(255,255,255,.9); }
+.case-study-content { width: min(900px, calc(100% - 32px)); margin: 0 auto; padding: 64px 0 80px; }
+.case-study-section { margin-bottom: 42px; }
+.case-study-section h2 { margin-bottom: 16px; color: #4f46e5; font-size: 1.8rem; }
+.case-study-section p { color: #475569; font-size: 1.04rem; }
+.feature-list { display: grid; gap: 12px; margin: 22px 0 0; padding: 0; list-style: none; }
+.feature-list li { padding: 16px 18px 16px 48px; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; position: relative; }
+.feature-list li::before { content: "✓"; position: absolute; left: 18px; color: #4f46e5; font-weight: 900; }
+.tech-stack { display: flex; flex-wrap: wrap; gap: 10px; }
+.tech-item { padding: 8px 14px; color: #312e81; background: #eef2ff; border-radius: 999px; font-size: .9rem; font-weight: 700; }
+.why-matters { padding: 28px; background: #f8fafc; border-left: 4px solid #f0c75e; border-radius: 14px; }
+.why-matters h3 { margin-bottom: 10px; color: #0f172a; }
+.back-button { display: inline-block; margin-top: 34px; padding: 12px 20px; color: #fff; background: #4f46e5; border-radius: 10px; text-decoration: none; font-weight: 800; }
+@media (max-width: 640px) { .case-study-header { padding-top: 108px; } .case-study-header img { width: 100%; } .case-study-content { padding-top: 46px; } }

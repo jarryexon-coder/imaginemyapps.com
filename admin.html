@@ -235,8 +235,6 @@
     </div>
 
     <script>
-        // YOUR ADMIN TOKEN - Make sure this matches your Railway variable
-        const ADMIN_TOKEN = 'h+MJQnLvM5z6Rv2ZWaLv0cdu325qn8CVnZRqL86krmY=';
         const API_URL = '/api/contact';
         
         let consultations = [];
@@ -247,15 +245,13 @@
 
             try {
                 const response = await fetch(API_URL, {
-                    headers: {
-                        'Authorization': `Bearer ${ADMIN_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    }
+                    credentials: 'same-origin'
                 });
 
                 if (!response.ok) {
                     if (response.status === 401) {
-                        throw new Error('Unauthorized. Please check your admin token.');
+                        window.location.href = '/login.html';
+                        return;
                     }
                     if (response.status === 404) {
                         throw new Error('API endpoint not found. Make sure your backend is running.');
@@ -315,10 +311,10 @@
             tbody.innerHTML = filtered.map(c => `
                 <tr>
                     <td>#${c.id}</td>
-                    <td><strong>${c.name || 'N/A'}</strong></td>
-                    <td>${c.email || 'N/A'}</td>
-                    <td>${c.service || 'Not specified'}</td>
-                    <td><span class="status-badge status-${c.status || 'pending'}">${c.status || 'pending'}</span></td>
+                    <td><strong>${escapeHtml(c.name || 'N/A')}</strong></td>
+                    <td>${escapeHtml(c.email || 'N/A')}</td>
+                    <td>${escapeHtml(c.service || 'Not specified')}</td>
+                    <td><span class="status-badge status-${escapeHtml(c.status || 'pending')}">${escapeHtml(c.status || 'pending')}</span></td>
                     <td>${c.created_at ? new Date(c.created_at).toLocaleDateString() : 'N/A'}</td>
                     <td>
                         <button class="action-btn btn-view" onclick="viewDetails(${c.id})">👁️ View</button>
@@ -346,17 +342,17 @@
             const modalBody = document.getElementById('modalBody');
             
             modalBody.innerHTML = `
-                <p><strong>Name:</strong> ${consultation.name || 'N/A'}</p>
-                <p><strong>Email:</strong> ${consultation.email || 'N/A'}</p>
-                <p><strong>Phone:</strong> ${consultation.phone || 'Not provided'}</p>
-                <p><strong>Service:</strong> ${consultation.service || 'Not specified'}</p>
-                <p><strong>Budget:</strong> ${consultation.budget || 'Not specified'}</p>
-                <p><strong>Timeframe:</strong> ${consultation.timeframe || 'Not specified'}</p>
-                <p><strong>Status:</strong> <span class="status-badge status-${consultation.status || 'pending'}">${consultation.status || 'pending'}</span></p>
+                <p><strong>Name:</strong> ${escapeHtml(consultation.name || 'N/A')}</p>
+                <p><strong>Email:</strong> ${escapeHtml(consultation.email || 'N/A')}</p>
+                <p><strong>Phone:</strong> ${escapeHtml(consultation.phone || 'Not provided')}</p>
+                <p><strong>Service:</strong> ${escapeHtml(consultation.service || 'Not specified')}</p>
+                <p><strong>Budget:</strong> ${escapeHtml(consultation.budget || 'Not specified')}</p>
+                <p><strong>Timeframe:</strong> ${escapeHtml(consultation.timeframe || 'Not specified')}</p>
+                <p><strong>Status:</strong> <span class="status-badge status-${escapeHtml(consultation.status || 'pending')}">${escapeHtml(consultation.status || 'pending')}</span></p>
                 <p><strong>Submitted:</strong> ${consultation.created_at ? new Date(consultation.created_at).toLocaleString() : 'N/A'}</p>
                 <hr>
                 <p><strong>Message:</strong></p>
-                <p style="background: #f7f9fc; padding: 15px; border-radius: 6px; margin-top: 5px; white-space: pre-wrap;">${consultation.message || 'No message'}</p>
+                <p style="background: #f7f9fc; padding: 15px; border-radius: 6px; margin-top: 5px; white-space: pre-wrap;">${escapeHtml(consultation.message || 'No message')}</p>
             `;
             
             modal.style.display = 'flex';
@@ -373,9 +369,9 @@
                 const response = await fetch(`${API_URL}?id=${id}`, {
                     method: 'PUT',
                     headers: {
-                        'Authorization': `Bearer ${ADMIN_TOKEN}`,
                         'Content-Type': 'application/json'
                     },
+                    credentials: 'same-origin',
                     body: JSON.stringify({ status: newStatus })
                 });
 
@@ -389,6 +385,12 @@
                 console.error('Error updating status:', error);
                 alert('Error updating status: ' + error.message);
             }
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>'"]/g, character => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+            })[character]);
         }
 
         function exportCSV() {

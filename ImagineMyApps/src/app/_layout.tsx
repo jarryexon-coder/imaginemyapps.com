@@ -1,18 +1,26 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
-
-SplashScreen.preventAutoHideAsync();
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <>
+      <StatusBar style="light" />
+      <Stack
+        screenOptions={{
+          headerStyle: { backgroundColor: '#111827' },
+          headerTintColor: '#FFFFFF',
+          headerTitleStyle: { fontWeight: '700' },
+          contentStyle: { backgroundColor: '#F8FAFC' },
+        }}>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="portfolio" options={{ headerShown: false }} />
+        <Stack.Screen name="case-study/[slug]" options={{ title: 'Case Study' }} />
+        <Stack.Screen name="planner" options={{ title: 'Project Planner' }} />
+        <Stack.Screen name="projects" options={{ title: 'My Projects' }} />
+        <Stack.Screen name="project/[id]" options={{ title: 'Project Brief' }} />
+        <Stack.Screen name="support" options={{ title: 'Help & Support' }} />
+        <Stack.Screen name="consultation" options={{ title: 'Request a Consultation' }} />
+      </Stack>
+    </>
   );
 }

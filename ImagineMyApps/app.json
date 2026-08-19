@@ -1,42 +1,58 @@
 {
   "expo": {
     "name": "ImagineMyApps",
-    "slug": "ImagineMyApps",
+    "slug": "imaginemyapps",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/imaginemyapps-icon.png",
     "scheme": "imaginemyapps",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/images/imaginemyapps-icon.png",
+      "bundleIdentifier": "com.imaginemyapps.app",
+      "buildNumber": "1",
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "backgroundColor": "#111827",
+        "foregroundImage": "./assets/images/imaginemyapps-icon.png"
       },
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/imaginemyapps-icon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 76
+          "backgroundColor": "#111827",
+          "image": "./assets/images/imaginemyapps-splash.png",
+          "imageWidth": 180,
+          "dark": {
+            "backgroundColor": "#111827",
+            "image": "./assets/images/imaginemyapps-splash.png"
+          }
         }
-      ]
+      ],
+      "expo-web-browser",
+      "expo-image"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "4c514971-2f5c-4895-a732-202da11e8e70"
+      }
     }
   }
 }

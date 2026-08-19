@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How ImagineMyApps built Sports Analytics Mobile, a subscription-based iOS platform for live sports data, projections, and research tools.">
+    <title>Sports Analytics Mobile Case Study | ImagineMyApps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --ink:#0b1020; --surface:#111a2e; --card:#16213a; --line:#263552; --blue:#6c8cff; --cyan:#67d7ff; --text:#f7f9ff; --muted:#aebbd2; --paper:#f7f9fc; }
+        * { box-sizing:border-box; }
+        body { margin:0; font-family:Inter,system-ui,sans-serif; color:#172033; background:var(--paper); line-height:1.7; }
+        a { color:inherit; }
+        nav { position:absolute; inset:0 0 auto; z-index:3; padding:22px 24px; }
+        .nav-inner { max-width:1120px; margin:auto; display:flex; align-items:center; justify-content:space-between; }
+        .brand { color:white; font-weight:800; letter-spacing:-.02em; text-decoration:none; font-size:20px; }
+        .nav-links { display:flex; gap:24px; }
+        .nav-links a { color:#dce7ff; text-decoration:none; font-size:14px; font-weight:600; }
+        .hero { position:relative; overflow:hidden; background:radial-gradient(circle at 80% 10%,#253f7c 0,transparent 34%),linear-gradient(145deg,#070b16,#101a32 68%,#152b59); color:white; padding:135px 24px 86px; }
+        .hero:after { content:""; position:absolute; width:420px; height:420px; right:-180px; bottom:-260px; border:1px solid rgba(108,140,255,.3); border-radius:50%; box-shadow:0 0 0 70px rgba(108,140,255,.05),0 0 0 140px rgba(108,140,255,.03); }
+        .hero-grid { position:relative; z-index:1; max-width:1120px; margin:auto; display:grid; grid-template-columns:1.15fr .85fr; gap:70px; align-items:center; }
+        .eyebrow { color:#9db3ff; font-size:12px; letter-spacing:.16em; font-weight:800; margin:0 0 18px; }
+        h1 { max-width:760px; margin:0; font-size:clamp(42px,6vw,72px); line-height:1.02; letter-spacing:-.055em; }
+        .hero-copy { max-width:680px; color:#c3cee3; font-size:18px; line-height:1.75; margin:25px 0 32px; }
+        .actions { display:flex; flex-wrap:wrap; gap:12px; }
+        .button { display:inline-flex; align-items:center; justify-content:center; padding:13px 20px; border-radius:11px; text-decoration:none; font-weight:800; font-size:14px; }
+        .button-primary { background:#dfe7ff; color:#111a2e; }
+        .button-secondary { border:1px solid #526b9f; color:#e9efff; }
+        .app-card { justify-self:center; width:min(100%,310px); padding:18px; border:1px solid rgba(151,175,232,.25); border-radius:38px; background:rgba(5,9,20,.7); box-shadow:0 35px 80px rgba(0,0,0,.45); }
+        .app-card img { display:block; width:100%; border-radius:24px; }
+        main { max-width:980px; margin:auto; padding:74px 24px 90px; }
+        .metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:-108px 0 72px; position:relative; z-index:2; }
+        .metric { background:white; padding:26px; border-radius:16px; box-shadow:0 14px 40px rgba(34,51,84,.1); border:1px solid #e5eaf2; }
+        .metric strong { display:block; color:#3158c8; font-size:31px; line-height:1; margin-bottom:10px; }
+        .metric span { color:#5c687c; font-size:14px; font-weight:600; }
+        section { margin-bottom:62px; }
+        h2 { color:#111a2e; font-size:32px; letter-spacing:-.035em; line-height:1.2; margin:0 0 18px; }
+        h3 { color:#16213a; margin:0 0 8px; font-size:17px; }
+        p { color:#4c586c; margin:0 0 18px; }
+        .feature-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:28px; }
+        .feature { background:white; border:1px solid #e1e7f0; border-radius:16px; padding:23px; }
+        .feature p { font-size:14px; line-height:1.65; margin:0; }
+        .feature-icon { width:36px; height:36px; display:grid; place-items:center; margin-bottom:16px; border-radius:10px; background:#e8edff; color:#3158c8; font-weight:800; }
+        .architecture { background:var(--ink); border-radius:22px; padding:32px; color:white; }
+        .architecture h2 { color:white; }
+        .architecture > p { color:#aebbd2; }
+        .flow { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:27px; }
+        .flow-item { min-height:125px; border:1px solid var(--line); border-radius:13px; padding:17px; background:var(--surface); }
+        .flow-item strong { color:#dce6ff; display:block; font-size:13px; margin-bottom:7px; }
+        .flow-item span { color:#91a1bd; font-size:12px; line-height:1.55; display:block; }
+        .stack { display:flex; flex-wrap:wrap; gap:9px; }
+        .stack span { padding:9px 14px; border:1px solid #dbe2ed; background:white; color:#33425c; border-radius:999px; font-size:13px; font-weight:700; }
+        .outcomes { display:grid; grid-template-columns:1fr 1fr; gap:38px; align-items:start; }
+        .checklist { list-style:none; padding:0; margin:0; }
+        .checklist li { position:relative; padding:0 0 15px 28px; color:#4c586c; }
+        .checklist li:before { content:"✓"; position:absolute; left:0; top:0; color:#2d68d8; font-weight:900; }
+        .cta { padding:42px; background:linear-gradient(135deg,#243d76,#111a2e); color:white; border-radius:22px; }
+        .cta h2 { color:white; }
+        .cta p { color:#c4d0e7; max-width:660px; }
+        footer { padding:30px 24px; background:#070b16; color:#9ba8c0; text-align:center; font-size:13px; }
+        @media(max-width:760px) { .nav-links { display:none; } .hero-grid,.outcomes { grid-template-columns:1fr; } .app-card { display:none; } .metrics { grid-template-columns:1fr; margin-top:-40px; } .feature-grid { grid-template-columns:1fr; } .flow { grid-template-columns:1fr 1fr; } }
+    </style>
+</head>
+<body>
+    <nav><div class="nav-inner"><a class="brand" href="/">ImagineMyApps</a><div class="nav-links"><a href="/#services">Services</a><a href="/#portfolio">Portfolio</a><a href="/#consultation">Consultation</a></div></div></nav>
+    <header class="hero">
+        <div class="hero-grid">
+            <div>
+                <p class="eyebrow">MOBILE PRODUCT CASE STUDY</p>
+                <h1>Live sports research, rebuilt for mobile.</h1>
+                <p class="hero-copy">Sports Analytics Mobile turns a large browser-based analytics platform into a focused iOS experience for live data, projections, player-prop research, fantasy tools, and AI-assisted workflows.</p>
+                <div class="actions"><a class="button button-primary" href="https://sportsanalyticsgpt.com" target="_blank" rel="noopener">Open Web Platform ↗</a><a class="button button-secondary" href="/#consultation">Build an app like this</a></div>
+            </div>
+            <div class="app-card"><img src="/assets/images/logos/sports-analytics-mobile.png" alt="Sports Analytics Mobile app icon"></div>
+        </div>
+    </header>
+    <main>
+        <div class="metrics">
+            <div class="metric"><strong>4</strong><span>Dedicated sports packages</span></div>
+            <div class="metric"><strong>78</strong><span>Cataloged tools and app routes</span></div>
+            <div class="metric"><strong>5</strong><span>Subscription access tiers</span></div>
+        </div>
+
+        <section>
+            <h2>The challenge</h2>
+            <p>The existing product covered a wide range of sports, data sources, prediction tools, and account workflows. The mobile app needed to make that depth usable on a small screen without presenting users with an overwhelming list of disconnected features.</p>
+            <p>It also needed secure account access, package-level entitlements, native App Store subscriptions, live API connectivity, and clear account-management paths that satisfy Apple’s platform requirements.</p>
+        </section>
+
+        <section>
+            <h2>The product we built</h2>
+            <p>We organized the experience around MLB, NFL, NBA, NCAA, and a Supercharged research tier. Each customer sees the sports and tools included with their active package, while the navigation stays compact and native to iOS.</p>
+            <div class="feature-grid">
+                <article class="feature"><div class="feature-icon">01</div><h3>Live sports data</h3><p>Schedules, team context, rosters, player performance, projections, news, and prop lines are normalized from production Railway APIs.</p></article>
+                <article class="feature"><div class="feature-icon">02</div><h3>Advanced research</h3><p>Sortable analytics, projection comparisons, confidence filters, market direction, and player-level detail support faster investigation.</p></article>
+                <article class="feature"><div class="feature-icon">03</div><h3>AI-assisted workflows</h3><p>Parlay suggestions and combination scoring turn live prop signals into transparent, reviewable research—not unexplained black-box outputs.</p></article>
+                <article class="feature"><div class="feature-icon">04</div><h3>Native subscriptions</h3><p>RevenueCat coordinates weekly and monthly App Store products while Firebase identity keeps package access synchronized across sessions.</p></article>
+                <article class="feature"><div class="feature-icon">05</div><h3>Secure accounts</h3><p>Firebase authentication, server-authorized profiles, protected API requests, subscription restoration, and in-app account deletion cover the full lifecycle.</p></article>
+                <article class="feature"><div class="feature-icon">06</div><h3>App Store release path</h3><p>Expo Application Services provides signed production builds, automatic build-number increments, TestFlight delivery, and repeatable releases.</p></article>
+            </div>
+        </section>
+
+        <section class="architecture">
+            <h2>How the system works</h2>
+            <p>The mobile client stays lean by delegating identity, live sports aggregation, and purchase state to specialized services.</p>
+            <div class="flow">
+                <div class="flow-item"><strong>Expo + React Native</strong><span>Native navigation, accessible screens, dark theme, and mobile interaction patterns.</span></div>
+                <div class="flow-item"><strong>Firebase</strong><span>Email authentication, stable user identity, and server-verifiable access tokens.</span></div>
+                <div class="flow-item"><strong>Railway APIs</strong><span>Live games, projections, props, news, player data, and account profiles.</span></div>
+                <div class="flow-item"><strong>RevenueCat</strong><span>App Store purchases, restoration, entitlement mapping, and subscription management.</span></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Technology stack</h2>
+            <div class="stack"><span>React Native</span><span>Expo</span><span>TypeScript</span><span>React Navigation</span><span>Firebase Authentication</span><span>RevenueCat</span><span>Railway</span><span>REST APIs</span><span>EAS Build</span></div>
+        </section>
+
+        <section class="outcomes">
+            <div><h2>What the build demonstrates</h2><p>This project shows how a feature-heavy web platform can become a focused native product without duplicating backend logic or exposing provider credentials in the mobile bundle.</p></div>
+            <ul class="checklist"><li>A native information architecture for multiple sports</li><li>Real production data instead of static mockups</li><li>Package-aware navigation and access control</li><li>App Store-compliant purchase and restore flows</li><li>Shared identity across web, mobile, and backend</li><li>A repeatable TestFlight and release workflow</li></ul>
+        </section>
+
+        <section class="cta"><h2>Have a data-heavy product idea?</h2><p>We can help shape the mobile experience, connect your backend, add secure accounts and payments, and prepare the result for App Store submission.</p><a class="button button-primary" href="/#consultation">Request a free consultation</a></section>
+    </main>
+    <footer>© 2026 ImagineMyApps · Professional mobile and web application development</footer>
+</body>
+</html>

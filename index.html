@@ -132,9 +132,9 @@
                 <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#consultation">Consultation</a></li>
             </ul>
-            <div class="menu-btn">
+            <button class="menu-btn" type="button" aria-label="Open navigation" aria-expanded="false">
                 <i class="fas fa-bars"></i>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -150,11 +150,11 @@
 
             <!-- Trust Badges -->
             <div class="trust-badges">
-                <span class="trust-badge"><i class="fas fa-lock"></i> 256-bit SSL</span>
-                <span class="trust-badge"><i class="fas fa-shield-halved"></i> GDPR Compliant</span>
-                <span class="trust-badge"><i class="fas fa-star"></i> 4.9/5 Rating</span>
-                <span class="trust-badge"><i class="fas fa-clock"></i> 24/7 Support</span>
-                <span class="trust-badge"><i class="fas fa-check-circle"></i> 50+ Apps Launched</span>
+                <span class="trust-badge"><i class="fas fa-lock"></i> Secure Hosting</span>
+                <span class="trust-badge"><i class="fas fa-shield-halved"></i> Privacy Ready</span>
+                <span class="trust-badge"><i class="fas fa-mobile-screen-button"></i> App Store Support</span>
+                <span class="trust-badge"><i class="fas fa-comments"></i> Responsive Support</span>
+                <span class="trust-badge"><i class="fas fa-check-circle"></i> Production Builds</span>
             </div>
 
             <!-- Download App Banner -->
@@ -302,6 +302,13 @@
                             <option value="flexible">Flexible</option>
                         </select>
                     </div>
+                    <div class="form-group" style="position: absolute; left: -9999px;" aria-hidden="true">
+                        <label for="website">Website</label>
+                        <input type="text" id="website" tabindex="-1" autocomplete="off">
+                    </div>
+                    <p style="font-size: 0.9rem; line-height: 1.5;">
+                        By submitting, you agree that ImagineMyApps may use this information to respond to your request. See our <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.
+                    </p>
                     <button type="submit" class="btn btn-primary">Request Consultation</button>
                     <div id="formStatus" style="margin-top: 15px; display: none;"></div>
                 </form>
@@ -347,7 +354,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 ImagineMyApps. All rights reserved. | Built with <i class="fas fa-heart" style="color: #ff4757;"></i> for app creators</p>
+                <p>&copy; 2026 ImagineMyApps. All rights reserved. | Built with <i class="fas fa-heart" style="color: #ff4757;"></i> for app creators</p>
             </div>
         </div>
     </footer>
@@ -356,21 +363,22 @@
     <script>
         // Portfolio data
         const otherProjects = [
-            { name: "FitTrack Pro", desc: "Fitness tracking app with workout plans and nutrition tracking.", tech: ["React Native", "Node.js", "MongoDB"], logo: "/assets/images/logos/fittrack-logo.png", icon: "fa-dumbbell", caseStudy: "fittrack", demo: "fittrack" },
-            { name: "UrbanMart", desc: "E-commerce platform with payment integration and inventory management.", tech: ["Next.js", "Stripe", "PostgreSQL"], logo: "/assets/images/logos/urbanmart-logo.png", icon: "fa-store", caseStudy: "urbanmart", demo: "urbanmart" },
-            { name: "DataDash", desc: "Business intelligence dashboard with real-time analytics.", tech: ["Vue.js", "D3.js", "Firebase"], logo: "/assets/images/logos/datadash-logo.png", icon: "fa-chart-line", caseStudy: "datadash", demo: "datadash" },
-            { name: "Creator API Hub", desc: "API aggregation platform for content creators.", tech: ["Node.js", "Express", "PostgreSQL"], logo: "/assets/images/logos/api-hub-logo.png", icon: "fa-plug", caseStudy: "api-hub", demo: "api-hub" },
-            { name: "Nexus AI", desc: "Intelligent personal assistant that manages tasks autonomously.", tech: ["Python", "TensorFlow", "GPT-4"], logo: "/assets/images/logos/nexus-logo.png", icon: "fa-robot", caseStudy: "nexus-ai", demo: "nexus-ai" },
-            { name: "Web Scraper Pro", desc: "Intelligent data mining platform for web discovery.", tech: ["Python", "Scrapy", "MongoDB"], logo: "/assets/images/logos/webscraper-logo.png", icon: "fa-spider", caseStudy: "web-scraper", demo: "web-scraper" }
+            { name: "InvestBook", desc: "A native commercial real-estate discovery and deal-management platform with live listings, advanced filters, investor portfolios, secure chat, and App Store subscriptions.", tech: ["React Native", "Expo", "Node.js", "WebSockets", "In-App Purchases"], logo: "/assets/images/logos/investbook-mobile.png", icon: "fa-building", caseStudy: "investbook" },
+            { name: "FitTrack Pro", desc: "Fitness tracking app with workout plans and nutrition tracking.", tech: ["React Native", "Node.js", "MongoDB"], logo: "/assets/images/logos/fittrack-logo.png", icon: "fa-dumbbell", caseStudy: "fittrack" },
+            { name: "UrbanMart", desc: "E-commerce platform with payment integration and inventory management.", tech: ["Next.js", "Stripe", "PostgreSQL"], logo: "/assets/images/logos/urbanmart-logo.png", icon: "fa-store", caseStudy: "urbanmart" },
+            { name: "DataDash", desc: "Business intelligence dashboard with real-time analytics.", tech: ["Vue.js", "D3.js", "Firebase"], logo: "/assets/images/logos/datadash-logo.png", icon: "fa-chart-line", caseStudy: "datadash" },
+            { name: "Creator API Hub", desc: "API aggregation platform for content creators.", tech: ["Node.js", "Express", "PostgreSQL"], logo: "/assets/images/portfolio-covers/creatorhub-cover.png", icon: "fa-plug" },
+            { name: "Nexus AI", desc: "Intelligent personal assistant that manages tasks autonomously.", tech: ["Python", "TensorFlow", "GPT-4"], logo: "/assets/images/logos/nexus-logo.png", icon: "fa-robot", caseStudy: "nexus-ai" },
+            { name: "Web Scraper Pro", desc: "Intelligent data mining platform for web discovery.", tech: ["Python", "Scrapy", "MongoDB"], logo: "/assets/images/logos/webscraper-logo.png", icon: "fa-spider", caseStudy: "web-scraper" }
         ];
 
         const featuredProject = {
-            name: "Sports Analytics Pro",
-            desc: "AI-powered insights for daily fantasy sports. Real-time predictions, player projections, and advanced analytics for FanDuel, PrizePicks, and DraftKings.",
-            tech: ["Python", "TensorFlow", "XGBoost", "React"],
-            logo: "/assets/images/logos/sports-analytics-logo.png",
+            name: "Sports Analytics Mobile",
+            desc: "A production-ready iOS analytics platform for live sports data, player projections, prop research, AI-assisted parlays, fantasy tools, and subscription-based access across MLB, NFL, NBA, and NCAA.",
+            tech: ["React Native", "Expo", "TypeScript", "Firebase", "RevenueCat"],
+            logo: "/assets/images/logos/sports-analytics-mobile.png",
             caseStudy: "sports-analytics",
-            demo: "sports-analytics"
+            appUrl: "https://sportsanalyticsgpt.com"
         };
 
         function loadFeaturedProject() {
@@ -390,7 +398,7 @@
                         </div>
                         <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                             <a href="/case-study-${featuredProject.caseStudy}.html" style="background: #4F46E5; color: white; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600;">View Case Study →</a>
-                            <a href="/prototype-${featuredProject.demo}.html" style="background: #ffc107; color: #333; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600;">🎮 Try Demo</a>
+                            <a href="${featuredProject.appUrl}" target="_blank" rel="noopener" style="background: #ffc107; color: #333; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600;">Open Web App ↗</a>
                         </div>
                     </div>
                 </div>
@@ -404,7 +412,7 @@
             grid.innerHTML = otherProjects.map(item => `
                 <div class="portfolio-item">
                     <div style="background: #f5f5f5; height: 200px; display: flex; align-items: center; justify-content: center; padding: 20px;">
-                        <img src="${item.logo}" alt="${item.name}" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas ${item.icon}\' style=\'font-size: 4rem; color: #4F46E5;\'></i>'">
+                        <img src="${item.logo}" alt="${item.name}" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.onerror=null; this.style.display='none';">
                     </div>
                     <div class="portfolio-content">
                         <h3 class="portfolio-title">${item.name}</h3>
@@ -413,8 +421,9 @@
                             ${item.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
                         </div>
                         <div class="portfolio-buttons">
-                            <a href="/case-study-${item.caseStudy}.html" class="btn-small">View Case Study →</a>
-                            <a href="/prototype-${item.demo}.html" class="btn-small demo-btn">🎮 Try Demo</a>
+                            ${item.caseStudy ? `<a href="/case-study-${item.caseStudy}.html" class="btn-small">View Case Study →</a>` : ''}
+                            ${item.appUrl ? `<a href="${item.appUrl}" target="_blank" rel="noopener" class="btn-small demo-btn">Open App ↗</a>` : ''}
+                            ${item.demo ? `<a href="/prototype-${item.demo}.html" class="btn-small demo-btn">🎮 Try Demo</a>` : ''}
                         </div>
                     </div>
                 </div>
@@ -466,6 +475,8 @@
                     service: document.getElementById('service').value,
                     message: document.getElementById('message').value,
                     timeframe: document.getElementById('timeframe').value || ''
+                    ,source: 'website'
+                    ,website: document.getElementById('website').value || ''
                 };
                 
                 try {
@@ -512,6 +523,27 @@
         loadFeaturedProject();
         loadPortfolio();
         loadTestimonials();
+
+        const menuButton = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (menuButton && navLinks) {
+            menuButton.addEventListener('click', () => {
+                const isOpen = navLinks.classList.toggle('is-open');
+                menuButton.classList.toggle('is-open', isOpen);
+                menuButton.setAttribute('aria-expanded', String(isOpen));
+                menuButton.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+            });
+
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('is-open');
+                    menuButton.classList.remove('is-open');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                    menuButton.setAttribute('aria-label', 'Open navigation');
+                });
+            });
+        }
     </script>
 </body>
 </html>

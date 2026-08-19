@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How ImagineMyApps built InvestBook, a native commercial real-estate discovery, portfolio, and deal communication platform.">
+    <title>InvestBook Case Study | ImagineMyApps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --navy:#081a2c; --deep:#0b2440; --blue:#2563eb; --green:#10b981; --paper:#f5f8fb; --text:#122033; --muted:#5b6879; --line:#dce5ef; }
+        * { box-sizing:border-box; }
+        body { margin:0; font-family:Inter,system-ui,sans-serif; background:var(--paper); color:var(--text); line-height:1.7; }
+        a { color:inherit; }
+        nav { position:absolute; inset:0 0 auto; z-index:3; padding:22px 24px; }
+        .nav-inner { max-width:1120px; margin:auto; display:flex; align-items:center; justify-content:space-between; }
+        .brand { color:white; text-decoration:none; font-weight:800; font-size:20px; }
+        .nav-links { display:flex; gap:24px; }
+        .nav-links a { color:#dbeafe; text-decoration:none; font-size:14px; font-weight:600; }
+        .hero { position:relative; overflow:hidden; padding:135px 24px 90px; color:white; background:radial-gradient(circle at 82% 20%,rgba(16,185,129,.35),transparent 30%),linear-gradient(145deg,var(--navy),var(--deep) 65%,#123e52); }
+        .hero:after { content:""; position:absolute; inset:auto -90px -170px auto; width:420px; height:420px; border-radius:45% 55% 60% 40%; border:1px solid rgba(111,231,190,.25); transform:rotate(24deg); }
+        .hero-grid { position:relative; z-index:1; max-width:1120px; margin:auto; display:grid; grid-template-columns:1.15fr .85fr; gap:70px; align-items:center; }
+        .eyebrow { margin:0 0 18px; color:#6ee7b7; font-size:12px; font-weight:800; letter-spacing:.16em; }
+        h1 { margin:0; max-width:750px; font-size:clamp(42px,6vw,72px); line-height:1.03; letter-spacing:-.055em; }
+        .hero-copy { margin:25px 0 32px; max-width:690px; color:#c7d9e8; font-size:18px; line-height:1.75; }
+        .button { display:inline-flex; padding:13px 20px; border-radius:11px; text-decoration:none; font-weight:800; font-size:14px; }
+        .button-primary { color:#06291f; background:#a7f3d0; }
+        .app-card { justify-self:center; width:min(100%,310px); padding:18px; border:1px solid rgba(167,243,208,.25); border-radius:38px; background:rgba(4,20,34,.7); box-shadow:0 35px 80px rgba(0,0,0,.45); }
+        .app-card img { display:block; width:100%; border-radius:24px; }
+        main { max-width:980px; margin:auto; padding:74px 24px 90px; }
+        .metrics { position:relative; z-index:2; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:-108px 0 72px; }
+        .metric { padding:26px; background:white; border:1px solid var(--line); border-radius:16px; box-shadow:0 14px 40px rgba(22,49,73,.1); }
+        .metric strong { display:block; color:#087c5d; font-size:31px; line-height:1; margin-bottom:10px; }
+        .metric span { color:var(--muted); font-size:14px; font-weight:600; }
+        section { margin-bottom:62px; }
+        h2 { margin:0 0 18px; color:#102a43; font-size:32px; line-height:1.2; letter-spacing:-.035em; }
+        h3 { margin:0 0 8px; color:#12304a; font-size:17px; }
+        p { margin:0 0 18px; color:#516174; }
+        .features { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:28px; }
+        .feature { padding:23px; background:white; border:1px solid var(--line); border-radius:16px; }
+        .feature p { margin:0; font-size:14px; line-height:1.65; }
+        .feature-icon { width:38px; height:38px; display:grid; place-items:center; margin-bottom:16px; color:#087c5d; background:#d1fae5; border-radius:11px; font-weight:800; }
+        .architecture { padding:32px; color:white; background:linear-gradient(145deg,#0b2440,#0c3048); border-radius:22px; }
+        .architecture h2 { color:white; }
+        .architecture > p { color:#b5ccdc; }
+        .flow { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:27px; }
+        .flow-item { min-height:128px; padding:17px; background:#0e3550; border:1px solid #24516a; border-radius:13px; }
+        .flow-item strong { display:block; margin-bottom:7px; color:#d9fff1; font-size:13px; }
+        .flow-item span { color:#a9c1d0; font-size:12px; line-height:1.55; }
+        .stack { display:flex; flex-wrap:wrap; gap:9px; }
+        .stack span { padding:9px 14px; color:#33475c; background:white; border:1px solid var(--line); border-radius:999px; font-size:13px; font-weight:700; }
+        .outcomes { display:grid; grid-template-columns:1fr 1fr; gap:38px; }
+        .checklist { list-style:none; padding:0; margin:0; }
+        .checklist li { position:relative; padding:0 0 15px 28px; color:#516174; }
+        .checklist li:before { content:"✓"; position:absolute; left:0; color:#059669; font-weight:900; }
+        .cta { padding:42px; color:white; background:linear-gradient(135deg,#075f49,#0b2440); border-radius:22px; }
+        .cta h2 { color:white; }
+        .cta p { color:#c6e8dc; max-width:650px; }
+        footer { padding:30px 24px; color:#9eb2c3; background:#061522; text-align:center; font-size:13px; }
+        @media(max-width:760px) { .nav-links { display:none; } .hero-grid,.outcomes { grid-template-columns:1fr; } .app-card { display:none; } .metrics { grid-template-columns:1fr; margin-top:-40px; } .features { grid-template-columns:1fr; } .flow { grid-template-columns:1fr 1fr; } }
+    </style>
+</head>
+<body>
+    <nav><div class="nav-inner"><a class="brand" href="/">ImagineMyApps</a><div class="nav-links"><a href="/#services">Services</a><a href="/#portfolio">Portfolio</a><a href="/#consultation">Consultation</a></div></div></nav>
+    <header class="hero">
+        <div class="hero-grid">
+            <div>
+                <p class="eyebrow">COMMERCIAL REAL ESTATE CASE STUDY</p>
+                <h1>Investment opportunities, organized in one native app.</h1>
+                <p class="hero-copy">InvestBook helps investors discover commercial properties and businesses, evaluate detailed listings, organize deal portfolios, and communicate securely without juggling multiple disconnected tools.</p>
+                <a class="button button-primary" href="/#consultation">Build an app like this</a>
+            </div>
+            <div class="app-card"><img src="/assets/images/logos/investbook-mobile.png" alt="InvestBook mobile app icon"></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="metrics">
+            <div class="metric"><strong>1,063</strong><span>Bundled listing records</span></div>
+            <div class="metric"><strong>7</strong><span>Primary investor workflows</span></div>
+            <div class="metric"><strong>4</strong><span>Native subscription products</span></div>
+        </div>
+
+        <section>
+            <h2>The challenge</h2>
+            <p>Commercial real-estate opportunities arrive with inconsistent pricing, property details, broker information, and media. Investors need a fast way to search across that information, isolate affordable opportunities, preserve promising deals, and communicate with other participants.</p>
+            <p>The product also needed to work when network conditions are imperfect, protect subscription-only functionality, support account and privacy requirements, and package everything as a reliable iOS application.</p>
+        </section>
+
+        <section>
+            <h2>The product we built</h2>
+            <p>InvestBook combines discovery, evaluation, organization, and deal communication in one mobile workflow. Its navigation is centered on Dashboard, Opportunities, Deals, Portfolio, Under $200K, Chat, and Profile.</p>
+            <div class="features">
+                <article class="feature"><div class="feature-icon">01</div><h3>Opportunity discovery</h3><p>Investors can browse commercial listings and businesses, search by keyword, and filter by location, property type, pricing, and disclosure status.</p></article>
+                <article class="feature"><div class="feature-icon">02</div><h3>Affordable-deal workflow</h3><p>A dedicated Under $200K experience separates lower-cost properties and businesses from the broader opportunity feed.</p></article>
+                <article class="feature"><div class="feature-icon">03</div><h3>Detailed evaluation</h3><p>Deal pages consolidate images, pricing, address, property facts, square footage, cap rate, broker details, and source links.</p></article>
+                <article class="feature"><div class="feature-icon">04</div><h3>Investor portfolios</h3><p>Portfolio services let users retain and organize opportunities instead of repeatedly rebuilding research from the main listing feed.</p></article>
+                <article class="feature"><div class="feature-icon">05</div><h3>Real-time deal chat</h3><p>Socket.IO communication supports direct and deal-specific conversations, participant lookup, message state, and notifications.</p></article>
+                <article class="feature"><div class="feature-icon">06</div><h3>Native monetization</h3><p>Monthly and yearly view-only and chat plans use Apple in-app purchases, with backend receipt verification and access guards.</p></article>
+            </div>
+        </section>
+
+        <section class="architecture">
+            <h2>How the system works</h2>
+            <p>The application combines bundled data for resilient startup with network services for refreshed opportunities, user accounts, purchases, and conversations.</p>
+            <div class="flow">
+                <div class="flow-item"><strong>Expo + React Native</strong><span>Native iOS interface, stack and tab navigation, offline-friendly caching, and responsive deal screens.</span></div>
+                <div class="flow-item"><strong>Listing services</strong><span>Normalized commercial-property feeds, image fallbacks, smart price formatting, and structured listing details.</span></div>
+                <div class="flow-item"><strong>Node.js API</strong><span>Authentication, profiles, saved portfolios, subscription checks, and protected application data.</span></div>
+                <div class="flow-item"><strong>WebSockets + IAP</strong><span>Real-time communication plus Apple purchase, restoration, and entitlement verification.</span></div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Technology stack</h2>
+            <div class="stack"><span>React Native</span><span>Expo</span><span>JavaScript</span><span>React Navigation</span><span>Node.js</span><span>REST APIs</span><span>Socket.IO</span><span>AsyncStorage</span><span>Apple In-App Purchases</span><span>EAS Build</span></div>
+        </section>
+
+        <section class="outcomes">
+            <div><h2>What the build demonstrates</h2><p>InvestBook demonstrates how a data-heavy marketplace can become a practical mobile product with resilient data access, gated paid features, and communication tools layered into the same investor journey.</p></div>
+            <ul class="checklist"><li>Complex listing data normalized for mobile use</li><li>Search and filtering across diverse opportunities</li><li>Offline startup data and local cache recovery</li><li>Portfolio and deal-specific communication workflows</li><li>Monthly and yearly App Store subscriptions</li><li>Privacy, account deletion, and subscription management</li></ul>
+        </section>
+
+        <section class="cta"><h2>Building a marketplace or investor tool?</h2><p>We can help organize complex data, design the mobile workflow, connect real-time services, add native subscriptions, and prepare the product for App Store release.</p><a class="button button-primary" href="/#consultation">Request a free consultation</a></section>
+    </main>
+    <footer>© 2026 ImagineMyApps · Professional mobile and web application development</footer>
+</body>
+</html>
