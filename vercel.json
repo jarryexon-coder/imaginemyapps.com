@@ -13,6 +13,14 @@
   ],
   "routes": [
     {
+      "src": "/contact/?",
+      "dest": "/contact.html"
+    },
+    {
+      "src": "/support/?",
+      "dest": "/contact.html"
+    },
+    {
       "src": "/css/(.*)",
       "dest": "/css/$1"
     },
