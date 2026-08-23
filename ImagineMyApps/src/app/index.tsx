@@ -1,121 +1,24 @@
-import { Link, type Href } from 'expo-router';
-import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useMemo, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Link, useFocusEffect, type Href } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { AppBottomNav } from '../components/app-bottom-nav';
+import { loadPlans, ProjectPlan } from '../lib/project-storage';
 
-const services = [
-  { title: 'Mobile apps', detail: 'Native and cross-platform experiences from $1,599' },
-  { title: 'Web apps', detail: 'Responsive customer and business platforms from $899' },
-  { title: 'Backend systems', detail: 'APIs, databases, integrations, and automation from $979' },
-];
-
-export default function HomeScreen() {
-  return (
-    <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      <View style={styles.hero}>
-        <SafeAreaView edges={['top']}>
-          <Text style={styles.brand}>ImagineMyApps</Text>
-          <Text style={styles.heroTitle}>Turn your app idea into a clear plan.</Text>
-          <Text style={styles.heroCopy}>Use the interactive planner to define your audience, platforms, must-have features, early budget range, and launch readiness.</Text>
-          <Link href={'/planner' as Href} asChild>
-            <Pressable accessibilityRole="button" style={styles.primaryButton}>
-              <Text style={styles.primaryButtonText}>Start project planner</Text>
-            </Pressable>
-          </Link>
-          <Link href={'/projects' as Href} asChild>
-            <Pressable accessibilityRole="button" style={styles.showcaseButton}>
-              <Text style={styles.showcaseButtonText}>Open my saved projects</Text>
-            </Pressable>
-          </Link>
-        </SafeAreaView>
-      </View>
-
-      <View style={styles.featuredSection}>
-        <Text style={styles.eyebrow}>YOUR PROJECT WORKSPACE</Text>
-        <Text style={styles.sectionTitle}>Plan, save, track, and share</Text>
-        <Text style={styles.body}>Create structured app briefs, receive a directional cost and timeline range, complete a launch-readiness checklist, and share your plan with collaborators.</Text>
-        <Link href={'/planner' as Href} asChild><Pressable accessibilityRole="button" style={styles.plannerButton}><Text style={styles.plannerButtonText}>Create a new plan →</Text></Pressable></Link>
-      </View>
-
-      <View style={styles.featuredSection}>
-        <Text style={styles.eyebrow}>FEATURED SHOWCASE</Text>
-        <Text style={styles.sectionTitle}>Sports Analytics</Text>
-        <Text style={styles.body}>Our most complete product: live sports data, player projections, prop research, AI-assisted parlays, fantasy tools, and premium mobile access.</Text>
-        <Link href={'/case-study/sports-analytics' as Href} asChild>
-          <Pressable accessibilityRole="button" style={styles.featuredButton}>
-            <Text style={styles.featuredButtonText}>View flagship case study →</Text>
-          </Pressable>
-        </Link>
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.eyebrow}>PORTFOLIO</Text>
-        <Text style={styles.sectionTitle}>See the complete showcase</Text>
-        <Text style={styles.body}>Explore Sports Analytics, InvestBook, FitTrack Pro, UrbanMart, DataDash, Creator API Hub, Nexus AI, and Web Scraper Pro.</Text>
-        <Link href={'/portfolio' as Href} asChild><Pressable accessibilityRole="button" style={styles.secondaryButton}><Text style={styles.secondaryButtonText}>Open portfolio</Text></Pressable></Link>
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.eyebrow}>WHAT WE BUILD</Text>
-        <Text style={styles.sectionTitle}>Practical software for growing ideas</Text>
-        {services.map((service) => (
-          <View key={service.title} style={styles.card}>
-            <Text style={styles.cardTitle}>{service.title}</Text>
-            <Text style={styles.cardCopy}>{service.detail}</Text>
-          </View>
-        ))}
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.eyebrow}>YOUR CONSULTATION</Text>
-        <Text style={styles.sectionTitle}>A useful first step</Text>
-        <Text style={styles.body}>We’ll discuss your requirements, technical feasibility, development timeline, and an initial cost range. There is no obligation to proceed.</Text>
-        <Link href="/consultation" asChild>
-          <Pressable accessibilityRole="button" style={styles.secondaryButton}>
-            <Text style={styles.secondaryButtonText}>Request a free consultation</Text>
-          </Pressable>
-        </Link>
-      </View>
-
-      <View style={styles.footer}>
-        <Pressable onPress={() => Linking.openURL('https://imaginemyapps.com/privacy.html')}>
-          <Text style={styles.footerLink}>Privacy Policy</Text>
-        </Pressable>
-        <Pressable onPress={() => Linking.openURL('mailto:admin@imaginemyapps.com')}>
-          <Text style={styles.footerLink}>Contact Support</Text>
-        </Pressable>
-        <Link href={'/support' as Href} asChild><Pressable><Text style={styles.footerLink}>Help & Support</Text></Pressable></Link>
-        <Text style={styles.copyright}>© 2026 ImagineMyApps</Text>
-      </View>
-    </ScrollView>
-  );
+export default function DashboardScreen() {
+  const [plans, setPlans] = useState<ProjectPlan[]>([]);
+  useFocusEffect(useCallback(() => { loadPlans().then(setPlans); }, []));
+  const stats = useMemo(() => ({ tasks: plans.flatMap(p => p.tasks).filter(t => t.done).length, totalTasks: plans.flatMap(p => p.tasks).length, milestones: plans.flatMap(p => p.milestones).filter(m => m.done).length, totalMilestones: plans.flatMap(p => p.milestones).length }), [plans]);
+  const recent = plans[0];
+  return <View style={styles.shell}><ScrollView style={styles.screen} contentContainerStyle={styles.content}>
+    <View style={styles.hero}><SafeAreaView edges={['top']}><Text style={styles.brand}>APP PROJECT PLANNER</Text><Text style={styles.title}>Turn ideas into an actionable roadmap.</Text><Text style={styles.heroCopy}>Plan requirements, prioritize work, track budgets and milestones, and keep every app project moving.</Text><Link href={'/planner' as Href} asChild><Pressable style={styles.primary}><Text style={styles.primaryText}>+ Create project</Text></Pressable></Link></SafeAreaView></View>
+    <View style={styles.body}>
+      <Text style={styles.sectionTitle}>Workspace overview</Text><View style={styles.statGrid}><Stat value={`${plans.length}`} label="Projects"/><Stat value={`${stats.tasks}/${stats.totalTasks}`} label="Tasks done"/><Stat value={`${stats.milestones}/${stats.totalMilestones}`} label="Milestones"/></View>
+      {recent ? <><Text style={styles.sectionTitle}>Continue planning</Text><Link href={`/project/${recent.id}` as Href} asChild><Pressable style={styles.project}><View style={styles.row}><Text style={styles.projectName}>{recent.name}</Text><Text style={styles.chevron}>›</Text></View><Text style={styles.meta}>{recent.status} · {recent.type}</Text><View style={styles.progressTrack}><View style={[styles.progressFill,{width:`${Math.round((recent.checklist.filter(Boolean).length/checklistSize)*100)}%`}]} /></View><Text style={styles.progressText}>{recent.checklist.filter(Boolean).length}/{checklistSize} readiness checks complete</Text></Pressable></Link></> : <View style={styles.empty}><Text style={styles.emptyTitle}>Start with your first project</Text><Text style={styles.emptyCopy}>Create a reusable project workspace with tasks, milestones, budgets, requirements, and launch checks.</Text></View>}
+      <Text style={styles.sectionTitle}>Quick actions</Text><View style={styles.actions}><Link href={'/projects' as Href} asChild><Pressable style={styles.action}><Text style={styles.actionIcon}>▣</Text><Text style={styles.actionTitle}>My projects</Text><Text style={styles.actionCopy}>Review every active workspace</Text></Pressable></Link><Link href={'/resources' as Href} asChild><Pressable style={styles.action}><Text style={styles.actionIcon}>≡</Text><Text style={styles.actionTitle}>Planning resources</Text><Text style={styles.actionCopy}>Use templates and prompts</Text></Pressable></Link></View>
+    </View>
+  </ScrollView><AppBottomNav active="/"/></View>;
 }
-
-const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: '#F8FAFC' },
-  content: { paddingBottom: 40 },
-  hero: { backgroundColor: '#111827', paddingHorizontal: 24, paddingBottom: 48 },
-  brand: { color: '#F4C95D', fontSize: 20, fontWeight: '800', marginTop: 18, marginBottom: 48 },
-  heroTitle: { color: '#FFFFFF', fontSize: 42, lineHeight: 48, fontWeight: '800', letterSpacing: -1.2 },
-  heroCopy: { color: '#CBD5E1', fontSize: 17, lineHeight: 27, marginTop: 20 },
-  primaryButton: { backgroundColor: '#F4C95D', borderRadius: 14, marginTop: 30, paddingHorizontal: 22, paddingVertical: 17, alignItems: 'center' },
-  primaryButtonText: { color: '#111827', fontSize: 17, fontWeight: '800' },
-  showcaseButton: { borderColor: '#FFFFFF', borderWidth: 2, borderRadius: 14, marginTop: 12, paddingHorizontal: 22, paddingVertical: 15, alignItems: 'center' },
-  showcaseButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
-  section: { paddingHorizontal: 24, paddingTop: 42 },
-  featuredSection: { backgroundColor: '#FFF1F2', borderColor: '#FECDD3', borderWidth: 1, borderRadius: 20, marginHorizontal: 18, marginTop: 26, padding: 22 },
-  featuredButton: { backgroundColor: '#E63946', borderRadius: 13, marginTop: 22, paddingVertical: 15, alignItems: 'center' },
-  featuredButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '900' },
-  plannerButton: { backgroundColor: '#111827', borderRadius: 13, marginTop: 22, paddingVertical: 15, alignItems: 'center' },
-  plannerButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '900' },
-  eyebrow: { color: '#A87500', fontSize: 12, fontWeight: '800', letterSpacing: 1.5 },
-  sectionTitle: { color: '#111827', fontSize: 29, lineHeight: 35, fontWeight: '800', marginTop: 8, marginBottom: 18 },
-  card: { backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', borderWidth: 1, borderRadius: 16, padding: 20, marginBottom: 12 },
-  cardTitle: { color: '#111827', fontSize: 18, fontWeight: '800' },
-  cardCopy: { color: '#475569', fontSize: 15, lineHeight: 22, marginTop: 7 },
-  body: { color: '#475569', fontSize: 16, lineHeight: 26 },
-  secondaryButton: { borderColor: '#111827', borderWidth: 2, borderRadius: 14, marginTop: 24, paddingVertical: 15, alignItems: 'center' },
-  secondaryButtonText: { color: '#111827', fontSize: 16, fontWeight: '800' },
-  footer: { borderTopColor: '#E2E8F0', borderTopWidth: 1, marginTop: 48, paddingHorizontal: 24, paddingTop: 28, gap: 14 },
-  footerLink: { color: '#334155', fontSize: 15, fontWeight: '700' },
-  copyright: { color: '#64748B', fontSize: 13, marginTop: 8 },
-});
+const checklistSize=5;
+function Stat({value,label}:{value:string;label:string}){return <View style={styles.stat}><Text style={styles.statValue}>{value}</Text><Text style={styles.statLabel}>{label}</Text></View>}
+const styles=StyleSheet.create({shell:{flex:1,backgroundColor:'#F8FAFC'},screen:{flex:1},content:{paddingBottom:35},hero:{backgroundColor:'#111827',paddingHorizontal:24,paddingBottom:38},brand:{color:'#F4C95D',fontSize:12,fontWeight:'900',letterSpacing:1.5,marginTop:18},title:{color:'#FFF',fontSize:38,lineHeight:44,fontWeight:'900',marginTop:15},heroCopy:{color:'#CBD5E1',fontSize:16,lineHeight:25,marginTop:14},primary:{backgroundColor:'#F4C95D',padding:16,borderRadius:13,alignItems:'center',marginTop:24},primaryText:{color:'#111827',fontSize:16,fontWeight:'900'},body:{padding:22},sectionTitle:{color:'#111827',fontSize:22,fontWeight:'900',marginTop:24,marginBottom:13},statGrid:{flexDirection:'row',gap:9},stat:{flex:1,backgroundColor:'#FFF',borderWidth:1,borderColor:'#E2E8F0',borderRadius:14,padding:14},statValue:{color:'#111827',fontSize:22,fontWeight:'900'},statLabel:{color:'#64748B',fontSize:11,fontWeight:'700',marginTop:4},project:{backgroundColor:'#FFF',borderWidth:1,borderColor:'#E2E8F0',borderRadius:17,padding:18},row:{flexDirection:'row',alignItems:'center'},projectName:{color:'#111827',fontSize:20,fontWeight:'900',flex:1},chevron:{color:'#64748B',fontSize:28},meta:{color:'#64748B',fontSize:14,marginTop:4},progressTrack:{height:8,backgroundColor:'#E2E8F0',borderRadius:4,marginTop:16,overflow:'hidden'},progressFill:{height:8,backgroundColor:'#D19A16'},progressText:{color:'#64748B',fontSize:12,fontWeight:'700',marginTop:7},empty:{backgroundColor:'#FFFBEB',borderColor:'#F4C95D',borderWidth:1,borderRadius:17,padding:20},emptyTitle:{color:'#111827',fontSize:19,fontWeight:'900'},emptyCopy:{color:'#475569',fontSize:15,lineHeight:23,marginTop:8},actions:{gap:10},action:{backgroundColor:'#FFF',borderWidth:1,borderColor:'#E2E8F0',borderRadius:15,padding:17},actionIcon:{color:'#9A6B00',fontSize:22,fontWeight:'900'},actionTitle:{color:'#111827',fontSize:17,fontWeight:'900',marginTop:7},actionCopy:{color:'#64748B',fontSize:14,marginTop:4}});

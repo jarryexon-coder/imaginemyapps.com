@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { router, type Href } from 'expo-router';
-import { ProjectPlan, formatMoney, savePlan } from '../lib/project-storage';
+import { ProjectPlan, savePlan } from '../lib/project-storage';
 
 const types = ['Mobile app', 'Web app', 'Both mobile + web'];
 const platforms = ['iPhone / iPad', 'Android', 'Web'];
@@ -21,11 +21,12 @@ export default function PlannerScreen() {
   const [name, setName] = useState(''); const [audience, setAudience] = useState(''); const [type, setType] = useState(types[0]);
   const [selectedPlatforms, setPlatforms] = useState<string[]>(['iPhone / iPad']); const [selectedFeatures, setFeatures] = useState<string[]>([]); const [notes, setNotes] = useState(''); const [error, setError] = useState('');
   const estimate = useMemo(() => calculate(type, selectedPlatforms, selectedFeatures), [type, selectedPlatforms, selectedFeatures]);
+  const scopeProfile = estimate.low < 3500 ? 'Focused' : estimate.low < 6500 ? 'Advanced' : 'Complex';
   const toggle = (value:string, items:string[], setItems:(items:string[])=>void) => setItems(items.includes(value) ? items.filter(i=>i!==value) : [...items,value]);
   async function save() {
     if (name.trim().length < 2 || audience.trim().length < 3 || !selectedPlatforms.length) { setError('Add a project name, target audience, and at least one platform.'); return; }
     const now = new Date().toISOString();
-    const plan: ProjectPlan = { id: `${Date.now()}`, name:name.trim(), audience:audience.trim(), type, platforms:selectedPlatforms, features:selectedFeatures, notes:notes.trim(), estimateLow:estimate.low, estimateHigh:estimate.high, weeksLow:estimate.weeksLow, weeksHigh:estimate.weeksHigh, checklist:[false,false,false,false,false], createdAt:now, updatedAt:now };
+    const plan: ProjectPlan = { id: `${Date.now()}`, name:name.trim(), audience:audience.trim(), type, platforms:selectedPlatforms, features:selectedFeatures, notes:notes.trim(), estimateLow:estimate.low, estimateHigh:estimate.high, weeksLow:estimate.weeksLow, weeksHigh:estimate.weeksHigh, checklist:[false,false,false,false,false], status:'Planning', tasks:[], milestones:[], budgetItems:[], createdAt:now, updatedAt:now };
     await savePlan(plan); router.replace(`/project/${plan.id}` as Href);
   }
   return <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS==='ios'?'padding':undefined} keyboardVerticalOffset={90}><ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
@@ -36,7 +37,7 @@ export default function PlannerScreen() {
     <Label text="Platforms"/><ChoiceGroup items={platforms} selected={selectedPlatforms} onPress={(v)=>toggle(v,selectedPlatforms,setPlatforms)}/>
     <Label text="Must-have features"/><ChoiceGroup items={features} selected={selectedFeatures} onPress={(v)=>toggle(v,selectedFeatures,setFeatures)}/>
     <Label text="Notes"/><TextInput value={notes} onChangeText={setNotes} multiline placeholder="Describe the problem, workflow, or special requirements." placeholderTextColor="#94A3B8" style={[styles.input,styles.notes]}/>
-    <View style={styles.estimate}><Text style={styles.estimateLabel}>EARLY PLANNING RANGE</Text><Text style={styles.estimateMoney}>{formatMoney(estimate.low)}–{formatMoney(estimate.high)}</Text><Text style={styles.estimateTime}>{estimate.weeksLow}–{estimate.weeksHigh} weeks</Text><Text style={styles.estimateNote}>Final pricing and timing depend on design depth, integrations, content, and technical discovery.</Text></View>
+    <View style={styles.estimate}><Text style={styles.estimateLabel}>SCOPE PROFILE</Text><Text style={styles.estimateMoney}>{scopeProfile}</Text><Text style={styles.estimateTime}>{estimate.weeksLow}–{estimate.weeksHigh} week planning window</Text><Text style={styles.estimateNote}>This directional profile reflects platform and feature complexity. Track your own delivery expenses later inside the project workspace.</Text></View>
     {!!error&&<Text accessibilityRole="alert" style={styles.error}>{error}</Text>}<Pressable onPress={save} style={styles.save}><Text style={styles.saveText}>Save project brief</Text></Pressable>
   </ScrollView></KeyboardAvoidingView>;
 }

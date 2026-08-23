@@ -13,13 +13,12 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: '#F8FAFC' },
         }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="portfolio" options={{ headerShown: false }} />
-        <Stack.Screen name="case-study/[slug]" options={{ title: 'Case Study' }} />
         <Stack.Screen name="planner" options={{ title: 'Project Planner' }} />
-        <Stack.Screen name="projects" options={{ title: 'My Projects' }} />
-        <Stack.Screen name="project/[id]" options={{ title: 'Project Brief' }} />
+        <Stack.Screen name="projects" options={{ headerShown: false }} />
+        <Stack.Screen name="resources" options={{ headerShown: false }} />
+        <Stack.Screen name="settings" options={{ headerShown: false }} />
+        <Stack.Screen name="project/[id]" options={{ title: 'Project Workspace' }} />
         <Stack.Screen name="support" options={{ title: 'Help & Support' }} />
-        <Stack.Screen name="consultation" options={{ title: 'Request a Consultation' }} />
       </Stack>
     </>
   );
