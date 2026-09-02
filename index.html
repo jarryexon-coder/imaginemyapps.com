@@ -459,6 +459,58 @@
         const consultationForm = document.getElementById('consultationForm');
         const formStatus = document.getElementById('formStatus');
 
+        const attributionKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'ttclid'];
+
+        function getAttribution() {
+            let attribution = {};
+            try {
+                attribution = JSON.parse(sessionStorage.getItem('consultation_attribution') || '{}');
+            } catch (_error) {
+                attribution = {};
+            }
+
+            const query = new URLSearchParams(window.location.search);
+            attributionKeys.forEach(key => {
+                const value = query.get(key);
+                if (value) attribution[key] = value.slice(0, 500);
+            });
+            sessionStorage.setItem('consultation_attribution', JSON.stringify(attribution));
+            return attribution;
+        }
+
+        async function initializeTikTokPixel() {
+            try {
+                const response = await fetch('/api/tracking-config');
+                if (!response.ok) return;
+                const { tiktokPixelId } = await response.json();
+                if (!tiktokPixelId) return;
+
+                !function (w, d, t) {
+                    w.TiktokAnalyticsObject = t;
+                    const ttq = w[t] = w[t] || [];
+                    ttq.methods = ['page', 'track', 'identify', 'instances', 'debug', 'on', 'off', 'once', 'ready', 'alias', 'group', 'enableCookie', 'disableCookie', 'holdConsent', 'revokeConsent', 'grantConsent'];
+                    ttq.setAndDefer = function (object, method) {
+                        object[method] = function () { object.push([method].concat([].slice.call(arguments, 0))); };
+                    };
+                    for (let i = 0; i < ttq.methods.length; i++) ttq.setAndDefer(ttq, ttq.methods[i]);
+                    ttq.load = function (id) {
+                        const script = d.createElement('script');
+                        script.async = true;
+                        script.src = 'https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=' + encodeURIComponent(id) + '&lib=' + t;
+                        const firstScript = d.getElementsByTagName('script')[0];
+                        firstScript.parentNode.insertBefore(script, firstScript);
+                    };
+                    ttq.load(tiktokPixelId);
+                    ttq.page();
+                }(window, document, 'ttq');
+            } catch (_error) {
+                // Tracking must never interfere with the consultation form.
+            }
+        }
+
+        const consultationAttribution = getAttribution();
+        initializeTikTokPixel();
+
         if (consultationForm) {
             consultationForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
@@ -474,9 +526,12 @@
                     phone: document.getElementById('phone').value || '',
                     service: document.getElementById('service').value,
                     message: document.getElementById('message').value,
-                    timeframe: document.getElementById('timeframe').value || ''
-                    ,source: 'website'
-                    ,website: document.getElementById('website').value || ''
+                    timeframe: document.getElementById('timeframe').value || '',
+                    source: consultationAttribution.ttclid || (consultationAttribution.utm_source || '').toLowerCase().includes('tiktok')
+                        ? 'tiktok'
+                        : (consultationAttribution.utm_source || 'website'),
+                    ...consultationAttribution,
+                    website: document.getElementById('website').value || ''
                 };
                 
                 try {
@@ -496,6 +551,9 @@
                         formStatus.style.borderRadius = '5px';
                         formStatus.style.marginTop = '15px';
                         formStatus.innerHTML = '✅ ' + result.message;
+                        if (window.ttq && typeof window.ttq.track === 'function') {
+                            window.ttq.track('Lead', { content_name: 'consultation_request' });
+                        }
                         consultationForm.reset();
                         
                         setTimeout(() => {

@@ -29,6 +29,12 @@ async function createConsultation(req, res) {
   const message = clean(req.body?.message, 4000);
   const timeframe = clean(req.body?.timeframe, 60);
   const source = clean(req.body?.source, 20) || 'website';
+  const utmSource = clean(req.body?.utm_source, 120);
+  const utmMedium = clean(req.body?.utm_medium, 120);
+  const utmCampaign = clean(req.body?.utm_campaign, 240);
+  const utmContent = clean(req.body?.utm_content, 240);
+  const utmTerm = clean(req.body?.utm_term, 240);
+  const ttclid = clean(req.body?.ttclid, 500);
 
   if (clean(req.body?.website, 100)) {
     return res.status(200).json({ success: true, message: 'Request received.' });
@@ -38,9 +44,14 @@ async function createConsultation(req, res) {
   }
 
   const result = await pool.query(
-    `INSERT INTO consultations (name, email, phone, service, message, timeframe, source)
-     VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
-    [name, email, phone || null, service, message, timeframe || null, source]
+    `INSERT INTO consultations
+      (name, email, phone, service, message, timeframe, source, utm_source,
+       utm_medium, utm_campaign, utm_content, utm_term, ttclid)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+     RETURNING id`,
+    [name, email, phone || null, service, message, timeframe || null, source,
+      utmSource || null, utmMedium || null, utmCampaign || null,
+      utmContent || null, utmTerm || null, ttclid || null]
   );
   return res.status(201).json({
     success: true,
@@ -53,7 +64,8 @@ async function listConsultations(req, res) {
   if (!requireAdmin(req, res)) return;
   const result = await pool.query(
     `SELECT id, name, email, phone, service, message, timeframe, budget,
-            status, source, created_at, updated_at
+            status, source, utm_source, utm_medium, utm_campaign, utm_content,
+            utm_term, ttclid, created_at, updated_at
        FROM consultations ORDER BY created_at DESC LIMIT 500`
   );
   return res.status(200).json({ success: true, data: result.rows });

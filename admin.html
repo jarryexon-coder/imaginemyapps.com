@@ -213,13 +213,14 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Service</th>
+                        <th>Source</th>
                         <th>Status</th>
                         <th>Date</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="consultationsBody">
-                    <tr><td colspan="7" class="loading">Loading consultations...</td></tr>
+                    <tr><td colspan="8" class="loading">Loading consultations...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -241,7 +242,7 @@
 
         async function loadConsultations() {
             const tbody = document.getElementById('consultationsBody');
-            tbody.innerHTML = '<tr><td colspan="7" class="loading">Loading consultations...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8" class="loading">Loading consultations...</td></tr>';
 
             try {
                 const response = await fetch(API_URL, {
@@ -269,7 +270,7 @@
                 }
             } catch (error) {
                 console.error('Error loading consultations:', error);
-                tbody.innerHTML = `<tr><td colspan="7" class="error">❌ Error: ${error.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="error">❌ Error: ${error.message}</td></tr>`;
             }
         }
 
@@ -304,7 +305,7 @@
             }
 
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #718096; padding: 40px;">No consultations found</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #718096; padding: 40px;">No consultations found</td></tr>';
                 return;
             }
 
@@ -314,6 +315,7 @@
                     <td><strong>${escapeHtml(c.name || 'N/A')}</strong></td>
                     <td>${escapeHtml(c.email || 'N/A')}</td>
                     <td>${escapeHtml(c.service || 'Not specified')}</td>
+                    <td>${escapeHtml(c.source || 'website')}</td>
                     <td><span class="status-badge status-${escapeHtml(c.status || 'pending')}">${escapeHtml(c.status || 'pending')}</span></td>
                     <td>${c.created_at ? new Date(c.created_at).toLocaleDateString() : 'N/A'}</td>
                     <td>
@@ -348,6 +350,10 @@
                 <p><strong>Service:</strong> ${escapeHtml(consultation.service || 'Not specified')}</p>
                 <p><strong>Budget:</strong> ${escapeHtml(consultation.budget || 'Not specified')}</p>
                 <p><strong>Timeframe:</strong> ${escapeHtml(consultation.timeframe || 'Not specified')}</p>
+                <p><strong>Source:</strong> ${escapeHtml(consultation.source || 'website')}</p>
+                <p><strong>Campaign:</strong> ${escapeHtml(consultation.utm_campaign || 'Not provided')}</p>
+                <p><strong>Ad / content:</strong> ${escapeHtml(consultation.utm_content || 'Not provided')}</p>
+                <p><strong>TikTok click ID:</strong> ${escapeHtml(consultation.ttclid || 'Not provided')}</p>
                 <p><strong>Status:</strong> <span class="status-badge status-${escapeHtml(consultation.status || 'pending')}">${escapeHtml(consultation.status || 'pending')}</span></p>
                 <p><strong>Submitted:</strong> ${consultation.created_at ? new Date(consultation.created_at).toLocaleString() : 'N/A'}</p>
                 <hr>
@@ -399,7 +405,7 @@
                 return;
             }
 
-            const headers = ['ID', 'Name', 'Email', 'Phone', 'Service', 'Message', 'Status', 'Date'];
+            const headers = ['ID', 'Name', 'Email', 'Phone', 'Service', 'Message', 'Source', 'Campaign', 'Ad Content', 'TikTok Click ID', 'Status', 'Date'];
             const rows = consultations.map(c => [
                 c.id,
                 `"${(c.name || '').replace(/"/g, '""')}"`,
@@ -407,6 +413,10 @@
                 `"${(c.phone || '').replace(/"/g, '""')}"`,
                 `"${(c.service || '').replace(/"/g, '""')}"`,
                 `"${(c.message || '').replace(/"/g, '""')}"`,
+                `"${(c.source || '').replace(/"/g, '""')}"`,
+                `"${(c.utm_campaign || '').replace(/"/g, '""')}"`,
+                `"${(c.utm_content || '').replace(/"/g, '""')}"`,
+                `"${(c.ttclid || '').replace(/"/g, '""')}"`,
                 `"${c.status || 'pending'}"`,
                 `"${c.created_at ? new Date(c.created_at).toLocaleString() : ''}"`
             ]);
